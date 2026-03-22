@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>День 1 — Теория государства и права</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C9A84C;
+    --gold-dim: #8B6914;
+    --gold-glow: #E8C86A;
+    --bg: #080604;
+    --bg2: #110e06;
+    --bg3: #1a1208;
+    --text: #e8dcc8;
+    --text-dim: #a89878;
+    --text-muted: #6a5a3a;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Crimson Pro', Georgia, serif;
+    font-size: 17px;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background:
+      radial-gradient(ellipse 80% 50% at 20% 0%, #2a1e0433 0%, transparent 60%),
+      radial-gradient(ellipse 60% 40% at 80% 100%, #1a100233 0%, transparent 60%);
+    pointer-events: none; z-index: 0;
+  }
+
+  /* HEADER */
+  .header {
+    background: linear-gradient(180deg, #1a1208 0%, #0e0a04 100%);
+    border-bottom: 1px solid #C9A84C33;
+    padding: 20px 20px 16px;
+    position: sticky; top: 0; z-index: 100;
+  }
+  .header-badge {
+    font-size: 10px; letter-spacing: 3px; color: var(--gold-dim);
+    text-transform: uppercase; margin-bottom: 4px;
+  }
+  .header-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px; font-weight: 900;
+    color: var(--gold);
+    display: flex; align-items: center; gap: 10px;
+  }
+
+  /* TABS */
+  .tabs {
+    display: flex; gap: 6px; padding: 14px 20px;
+    background: var(--bg2);
+    border-bottom: 1px solid #C9A84C22;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tab {
+    flex-shrink: 0;
+    padding: 8px 16px; border-radius: 8px;
+    border: 1px solid #C9A84C22;
+    background: transparent;
+    color: var(--text-muted);
+    font-family: 'Crimson Pro', serif;
+    font-size: 14px; cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .tab.active {
+    background: linear-gradient(135deg, #C9A84C33, #C9A84C11);
+    border-color: #C9A84C77;
+    color: var(--gold);
+  }
+  .tab:hover { border-color: #C9A84C44; color: var(--text-dim); }
+
+  /* CONTENT */
+  .content { padding: 20px; position: relative; z-index: 1; max-width: 700px; margin: 0 auto; }
+  .section { display: none; animation: fadeIn 0.4s ease; }
+  .section.active { display: block; }
+  @keyframes fadeIn { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
+
+  /* THEORY CARDS */
+  .theory-card {
+    background: var(--bg3);
+    border: 1px solid #C9A84C22;
+    border-left: 3px solid var(--gold);
+    border-radius: 12px;
+    padding: 18px 18px 16px;
+    margin-bottom: 16px;
+  }
+  .theory-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 17px; font-weight: 700;
+    color: var(--gold); margin-bottom: 12px;
+  }
+  .theory-card p, .theory-card ul { color: var(--text-dim); font-size: 16px; line-height: 1.8; }
+  .theory-card ul { padding-left: 20px; }
+  .theory-card li { margin-bottom: 4px; }
+  .highlight-box {
+    background: #C9A84C11; border: 1px solid #C9A84C33;
+    border-radius: 8px; padding: 12px 14px; margin: 12px 0;
+    font-size: 15px; color: var(--gold-dim);
+    font-style: italic;
+  }
+  .norm-example {
+    display: grid; gap: 8px; margin-top: 12px;
+  }
+  .norm-part {
+    background: #0e0c08; border-radius: 8px;
+    padding: 10px 14px; border: 1px solid #C9A84C22;
+    display: flex; gap: 10px; align-items: flex-start;
+  }
+  .norm-label {
+    font-size: 11px; letter-spacing: 1px; text-transform: uppercase;
+    color: var(--gold); font-weight: 600; flex-shrink: 0; padding-top: 2px;
+    min-width: 80px;
+  }
+  .norm-text { font-size: 15px; color: var(--text-dim); }
+  .hierarchy {
+    counter-reset: hier; margin-top: 10px;
+  }
+  .hier-item {
+    display: flex; align-items: center; gap: 12px;
+    padding: 8px 12px; margin-bottom: 6px;
+    background: #0e0c08; border-radius: 6px;
+    border: 1px solid #C9A84C11;
+  }
+  .hier-num {
+    width: 24px; height: 24px; border-radius: 50%;
+    background: #C9A84C22; border: 1px solid #C9A84C44;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; color: var(--gold); font-weight: bold; flex-shrink: 0;
+  }
+  .hier-text { font-size: 15px; color: var(--text-dim); }
+  .hier-item.top { border-color: #C9A84C44; }
+  .hier-item.top .hier-num { background: #C9A84C44; }
+  .branches { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
+  .branch-box {
+    background: #0e0c08; border-radius: 8px; padding: 12px 14px;
+    border: 1px solid #C9A84C22;
+  }
+  .branch-title { font-size: 13px; font-weight: 600; color: var(--gold); margin-bottom: 6px; }
+  .branch-items { font-size: 13px; color: var(--text-muted); line-height: 1.8; }
+
+  /* PRACTICE */
+  .task-card {
+    background: var(--bg3);
+    border: 1px solid #C9A84C22;
+    border-radius: 12px; padding: 16px 18px;
+    margin-bottom: 12px;
+    display: flex; gap: 14px;
+  }
+  .task-num {
+    width: 32px; height: 32px; border-radius: 50%; flex-shrink: 0;
+    background: #C9A84C22; border: 1px solid #C9A84C55;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: bold; color: var(--gold);
+  }
+  .task-text { font-size: 16px; color: var(--text-dim); line-height: 1.7; }
+  .task-link a {
+    color: var(--gold); font-size: 13px;
+    text-decoration: none; border-bottom: 1px solid #C9A84C44;
+  }
+
+  /* TERMS */
+  .terms-grid { display: grid; gap: 10px; }
+  .term-card {
+    background: var(--bg3); border: 1px solid #C9A84C22;
+    border-radius: 10px; padding: 14px 16px;
+  }
+  .term-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px; color: var(--gold); margin-bottom: 6px;
+  }
+  .term-def { font-size: 15px; color: var(--text-dim); line-height: 1.7; }
+
+  /* QUIZ */
+  .quiz-card {
+    background: var(--bg3); border: 1px solid #C9A84C22;
+    border-radius: 12px; padding: 18px;
+    margin-bottom: 14px;
+  }
+  .quiz-q { font-size: 16px; font-weight: 600; color: var(--text); margin-bottom: 12px; }
+  .quiz-input {
+    width: 100%; background: #0e0c08;
+    border: 1px solid #C9A84C33; color: var(--text);
+    padding: 10px 14px; border-radius: 8px;
+    font-family: 'Crimson Pro', serif; font-size: 15px;
+    outline: none; transition: border-color 0.2s;
+  }
+  .quiz-input:focus { border-color: var(--gold); }
+  .show-btn {
+    margin-top: 10px; background: none;
+    border: 1px solid #C9A84C33; color: var(--gold-dim);
+    border-radius: 6px; padding: 6px 14px;
+    font-family: 'Crimson Pro', serif; font-size: 13px;
+    cursor: pointer; transition: all 0.2s;
+  }
+  .show-btn:hover { border-color: var(--gold); color: var(--gold); }
+  .answer-box {
+    display: none; margin-top: 10px;
+    background: #C9A84C0d; border: 1px solid #C9A84C33;
+    border-radius: 8px; padding: 12px 14px;
+    font-size: 15px; color: var(--gold-dim); line-height: 1.7;
+  }
+  .answer-box.visible { display: block; animation: fadeIn 0.3s ease; }
+
+  /* RESOURCES */
+  .res-card {
+    background: var(--bg3); border: 1px solid #C9A84C22;
+    border-radius: 10px; padding: 14px 16px; margin-bottom: 10px;
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  }
+  .res-name { font-size: 15px; color: var(--text-dim); }
+  .res-link {
+    color: var(--gold); font-size: 12px; text-decoration: none;
+    border: 1px solid #C9A84C44; border-radius: 5px;
+    padding: 4px 12px; flex-shrink: 0; transition: all 0.2s;
+  }
+  .res-link:hover { background: #C9A84C22; }
+
+  /* SECTION HEADER */
+  .section-label {
+    font-size: 10px; letter-spacing: 3px; color: var(--gold-dim);
+    text-transform: uppercase; margin-bottom: 16px;
+    padding-bottom: 8px; border-bottom: 1px solid #C9A84C22;
+  }
+
+  /* COMPLETE BUTTON */
+  .complete-wrap { text-align: center; padding: 24px 0 8px; }
+  .complete-btn {
+    background: linear-gradient(135deg, #C9A84C33, #C9A84C11);
+    border: 1px solid #C9A84C66; color: var(--gold);
+    border-radius: 10px; padding: 12px 32px;
+    font-family: 'Playfair Display', serif;
+    font-size: 16px; cursor: pointer; transition: all 0.3s;
+  }
+  .complete-btn:hover { background: linear-gradient(135deg, #C9A84C55, #C9A84C22); }
+  .complete-btn.done { background: linear-gradient(135deg, #C9A84C66, #C9A84C33); }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-badge">⚖️ Академия Российского Права · 30 дней</div>
+  <div class="header-title">📖 День 1 — Теория государства и права</div>
+</div>
+
+<div class="tabs">
+  <button class="tab active" onclick="showTab('theory', this)">📖 Теория</button>
+  <button class="tab" onclick="showTab('practice', this)">✏️ Практика</button>
+  <button class="tab" onclick="showTab('terms', this)">📌 Термины</button>
+  <button class="tab" onclick="showTab('quiz', this)">🧪 Тест</button>
+  <button class="tab" onclick="showTab('resources', this)">🔗 Источники</button>
+</div>
+
+<div class="content">
+
+  <!-- ====== THEORY ====== -->
+  <div class="section active" id="theory">
+    <div class="section-label">Теоретический материал — День 1</div>
+
+    <div class="theory-card">
+      <h3>1. Что такое право?</h3>
+      <p><strong style="color:var(--gold)">Право</strong> — это система общеобязательных норм поведения, установленных или санкционированных государством, обеспеченных его принудительной силой и регулирующих общественные отношения.</p>
+      <div class="highlight-box">
+        💡 Главное отличие правовой нормы от моральной или религиозной — <strong>государственное принуждение</strong> за её нарушение. Без государства — нет права.
+      </div>
+      <p>Право выполняет несколько функций:</p>
+      <ul>
+        <li><strong>Регулятивная</strong> — устанавливает правила поведения</li>
+        <li><strong>Охранительная</strong> — защищает права и интересы граждан</li>
+        <li><strong>Воспитательная</strong> — формирует правосознание общества</li>
+        <li><strong>Информационная</strong> — сообщает, что можно, нужно и нельзя</li>
+      </ul>
+    </div>
+
+    <div class="theory-card">
+      <h3>2. Норма права: структура</h3>
+      <p>Любая правовая норма состоит из <strong style="color:var(--gold)">трёх элементов</strong>:</p>
+      <div class="norm-example">
+        <div class="norm-part">
+          <span class="norm-label">Гипотеза</span>
+          <span class="norm-text">Условие, при котором норма применяется. <em>«Если лицо достигло 16 лет и совершило кражу…»</em></span>
+        </div>
+        <div class="norm-part">
+          <span class="norm-label">Диспозиция</span>
+          <span class="norm-text">Само правило поведения — что должны или могут делать субъекты. <em>«…то оно несёт уголовную ответственность…»</em></span>
+        </div>
+        <div class="norm-part">
+          <span class="norm-label">Санкция</span>
+          <span class="norm-text">Последствия за нарушение нормы. <em>«…в виде лишения свободы до 2 лет»</em></span>
+        </div>
+      </div>
+      <div class="highlight-box">
+        ⚠️ Запомни формулу: <strong>Если… То… Иначе…</strong> — это гипотеза, диспозиция, санкция.
+      </div>
+    </div>
+
+    <div class="theory-card">
+      <h3>3. Иерархия источников права в РФ</h3>
+      <p>Все правовые акты подчиняются строгой иерархии. Нижестоящий акт <strong style="color:var(--gold)">не может противоречить</strong> вышестоящему:</p>
+      <div class="hierarchy">
+        <div class="hier-item top">
+          <div class="hier-num">1</div>
+          <div class="hier-text"><strong>Конституция РФ</strong> — высшая юридическая сила</div>
+        </div>
+        <div class="hier-item">
+          <div class="hier-num">2</div>
+          <div class="hier-text"><strong>Федеральные конституционные законы (ФКЗ)</strong> — о судебной системе, референдуме и др.</div>
+        </div>
+        <div class="hier-item">
+          <div class="hier-num">3</div>
+          <div class="hier-text"><strong>Федеральные законы (ФЗ)</strong> — УК РФ, ГК РФ, ТК РФ и т.д.</div>
+        </div>
+        <div class="hier-item">
+          <div class="hier-num">4</div>
+          <div class="hier-text"><strong>Указы Президента РФ</strong></div>
+        </div>
+        <div class="hier-item">
+          <div class="hier-num">5</div>
+          <div class="hier-text"><strong>Постановления Правительства РФ</strong></div>
+        </div>
+        <div class="hier-item">
+          <div class="hier-num">6</div>
+          <div class="hier-text"><strong>Акты федеральных органов</strong> (министерств, ведомств)</div>
+        </div>
+        <div class="hier-item">
+          <div class="hier-num">7</div>
+          <div class="hier-text"><strong>Законы субъектов РФ</strong></div>
+        </div>
+        <div class="hier-item">
+          <div class="hier-num">8</div>
+          <div class="hier-text"><strong>Акты местного самоуправления</strong></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="theory-card">
+      <h3>4. Отрасли права</h3>
+      <p>Система права делится на отрасли по <strong style="color:var(--gold)">предмету</strong> (что регулирует) и <strong style="color:var(--gold)">методу</strong> (как регулирует):</p>
+      <div class="branches">
+        <div class="branch-box">
+          <div class="branch-title">🔴 Публичное право</div>
+          <div class="branch-items">
+            Государство — обязательный субъект<br>
+            Метод: <strong>императивный</strong><br><br>
+            • Конституционное<br>
+            • Уголовное<br>
+            • Административное<br>
+            • Финансовое<br>
+            • Процессуальное
+          </div>
+        </div>
+        <div class="branch-box">
+          <div class="branch-title">🔵 Частное право</div>
+          <div class="branch-items">
+            Равноправные субъекты<br>
+            Метод: <strong>диспозитивный</strong><br><br>
+            • Гражданское<br>
+            • Семейное<br>
+            • Трудовое<br>
+            • Предпринимательское<br>
+            • Жилищное
+          </div>
+        </div>
+      </div>
+      <div class="highlight-box" style="margin-top:12px">
+        📌 <strong>Императивный метод</strong> — строгие предписания, нельзя изменить договором.<br>
+        📌 <strong>Диспозитивный метод</strong> — стороны могут установить свои правила в договоре.
+      </div>
+    </div>
+
+    <div class="complete-wrap">
+      <button class="complete-btn" id="completeBtn" onclick="toggleComplete()">
+        ✓ Отметить день как пройденный
+      </button>
+    </div>
+  </div>
+
+  <!-- ====== PRACTICE ====== -->
+  <div class="section" id="practice">
+    <div class="section-label">Практические задания — День 1</div>
+
+    <div class="task-card">
+      <div class="task-num">1</div>
+      <div>
+        <div class="task-text">Зайди на сайт <strong>consultant.ru</strong> и найди Конституцию РФ. Прочитай <strong>Главу 1 (статьи 1–16)</strong> — основы конституционного строя. Запиши 3 нормы, которые показались тебе важными.</div>
+        <div class="task-link" style="margin-top:8px"><a href="https://www.consultant.ru/document/cons_doc_LAW_28399/" target="_blank">→ Открыть Конституцию РФ</a></div>
+      </div>
+    </div>
+
+    <div class="task-card">
+      <div class="task-num">2</div>
+      <div>
+        <div class="task-text">Найди структуру нормы (гипотезу, диспозицию, санкцию) в этом примере:<br><br>
+        <em style="color:var(--gold-dim)">«Работодатель обязан выплачивать заработную плату не реже чем каждые полмесяца. За задержку зарплаты работодатель выплачивает проценты и может быть привлечён к административной ответственности.»</em></div>
+      </div>
+    </div>
+
+    <div class="task-card">
+      <div class="task-num">3</div>
+      <div>
+        <div class="task-text">Запиши в тетрадь или заметки телефона определения следующих понятий своими словами:<br><br>
+        <strong style="color:var(--gold)">Право · Норма права · Правоотношение · Субъект права · Объект права · Источник права</strong></div>
+      </div>
+    </div>
+
+    <div class="task-card">
+      <div class="task-num">4</div>
+      <div>
+        <div class="task-text">Определи, к какой отрасли относятся эти ситуации:
+        <ul style="margin-top:8px; color:var(--text-dim); font-size:15px">
+          <li>Сосед залил квартиру — возмещение ущерба</li>
+          <li>Полиция задержала подозреваемого в краже</li>
+          <li>Работодатель уволил сотрудника</li>
+          <li>Муж и жена делят имущество при разводе</li>
+        </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====== TERMS ====== -->
+  <div class="section" id="terms">
+    <div class="section-label">Ключевые термины — День 1</div>
+    <div class="terms-grid">
+      <div class="term-card">
+        <div class="term-name">⚖️ Право</div>
+        <div class="term-def">Система общеобязательных норм, установленных государством и обеспеченных его принудительной силой для регулирования общественных отношений.</div>
+      </div>
+      <div class="term-card">
+        <div class="term-name">📋 Норма права</div>
+        <div class="term-def">Конкретное правило поведения, содержащее гипотезу, диспозицию и санкцию. Первичная клетка правовой системы.</div>
+      </div>
+      <div class="term-card">
+        <div class="term-name">❓ Гипотеза</div>
+        <div class="term-def">Часть нормы права, указывающая на условия (жизненные обстоятельства), при которых данная норма вступает в действие.</div>
+      </div>
+      <div class="term-card">
+        <div class="term-name">📌 Диспозиция</div>
+        <div class="term-def">Само правило поведения — что субъекты должны, могут или не вправе делать при наступлении условий гипотезы.</div>
+      </div>
+      <div class="term-card">
+        <div class="term-name">⚡ Санкция</div>
+        <div class="term-def">Часть нормы, указывающая на юридические последствия её нарушения: наказание, взыскание, лишение права и т.п.</div>
+      </div>
+      <div class="term-card">
+        <div class="term-name">🤝 Правоотношение</div>
+        <div class="term-def">Урегулированное нормой права общественное отношение, участники которого имеют взаимные юридические права и обязанности.</div>
+      </div>
+      <div class="term-card">
+        <div class="term-name">👤 Субъект права</div>
+        <div class="term-def">Физическое лицо, организация или государство, способные быть участниками правоотношений (обладающие правосубъектностью).</div>
+      </div>
+      <div class="term-card">
+        <div class="term-name">📜 Источник права</div>
+        <div class="term-def">Официальная форма выражения правовых норм: закон, указ, постановление, договор, обычай. В РФ основной источник — нормативно-правовой акт (НПА).</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====== QUIZ ====== -->
+  <div class="section" id="quiz">
+    <div class="section-label">Проверка знаний — 6 вопросов</div>
+
+    <div class="quiz-card">
+      <div class="quiz-q">1. Из каких трёх элементов состоит норма права?</div>
+      <input class="quiz-input" placeholder="Ваш ответ…">
+      <button class="show-btn" onclick="toggleAnswer(this)">Показать ответ</button>
+      <div class="answer-box">✓ <strong>Гипотеза, диспозиция, санкция.</strong> Гипотеза — условие применения; диспозиция — само правило; санкция — последствия нарушения.</div>
+    </div>
+
+    <div class="quiz-card">
+      <div class="quiz-q">2. Какой нормативный акт обладает высшей юридической силой в России?</div>
+      <input class="quiz-input" placeholder="Ваш ответ…">
+      <button class="show-btn" onclick="toggleAnswer(this)">Показать ответ</button>
+      <div class="answer-box">✓ <strong>Конституция Российской Федерации</strong> (принята 12 декабря 1993 года). Все остальные акты не могут ей противоречить.</div>
+    </div>
+
+    <div class="quiz-card">
+      <div class="quiz-q">3. В чём разница между публичным и частным правом?</div>
+      <input class="quiz-input" placeholder="Ваш ответ…">
+      <button class="show-btn" onclick="toggleAnswer(this)">Показать ответ</button>
+      <div class="answer-box">✓ <strong>Публичное</strong> — государство обязательный субъект, метод императивный (УК, КоАП, административное). <strong>Частное</strong> — равноправные субъекты, метод диспозитивный (ГК, ТК, СК).</div>
+    </div>
+
+    <div class="quiz-card">
+      <div class="quiz-q">4. Что такое диспозиция нормы права?</div>
+      <input class="quiz-input" placeholder="Ваш ответ…">
+      <button class="show-btn" onclick="toggleAnswer(this)">Показать ответ</button>
+      <div class="answer-box">✓ <strong>Диспозиция</strong> — само правило поведения: что субъекты должны, могут или не вправе делать при наступлении условий гипотезы.</div>
+    </div>
+
+    <div class="quiz-card">
+      <div class="quiz-q">5. Назовите 4 функции права.</div>
+      <input class="quiz-input" placeholder="Ваш ответ…">
+      <button class="show-btn" onclick="toggleAnswer(this)">Показать ответ</button>
+      <div class="answer-box">✓ <strong>Регулятивная, охранительная, воспитательная, информационная.</strong></div>
+    </div>
+
+    <div class="quiz-card">
+      <div class="quiz-q">6. Что такое «императивный метод» регулирования?</div>
+      <input class="quiz-input" placeholder="Ваш ответ…">
+      <button class="show-btn" onclick="toggleAnswer(this)">Показать ответ</button>
+      <div class="answer-box">✓ <strong>Метод строгих предписаний</strong>, при котором стороны не могут изменить правила договором. Характерен для публичного права (уголовного, административного).</div>
+    </div>
+  </div>
+
+  <!-- ====== RESOURCES ====== -->
+  <div class="section" id="resources">
+    <div class="section-label">Источники для изучения — День 1</div>
+
+    <div class="res-card">
+      <div class="res-name">📜 Конституция РФ — полный текст</div>
+      <a class="res-link" href="https://www.consultant.ru/document/cons_doc_LAW_28399/" target="_blank">Открыть →</a>
+    </div>
+    <div class="res-card">
+      <div class="res-name">📚 КонсультантПлюс — все законы РФ бесплатно</div>
+      <a class="res-link" href="https://www.consultant.ru/" target="_blank">Открыть →</a>
+    </div>
+    <div class="res-card">
+      <div class="res-name">📚 Гарант — правовая система</div>
+      <a class="res-link" href="https://www.garant.ru/" target="_blank">Открыть →</a>
+    </div>
+    <div class="res-card">
+      <div class="res-name">🏛️ Верховный Суд РФ — судебная практика</div>
+      <a class="res-link" href="https://www.vsrf.ru/" target="_blank">Открыть →</a>
+    </div>
+    <div class="res-card">
+      <div class="res-name">🏛️ Конституционный Суд РФ</div>
+      <a class="res-link" href="http://www.ksrf.ru/" target="_blank">Открыть →</a>
+    </div>
+    <div class="res-card">
+      <div class="res-name">🔍 Следственный комитет РФ</div>
+      <a class="res-link" href="https://sledcom.ru/" target="_blank">Открыть →</a>
+    </div>
+    <div class="res-card">
+      <div class="res-name">⚡ Генеральная Прокуратура РФ</div>
+      <a class="res-link" href="https://genproc.gov.ru/" target="_blank">Открыть →</a>
+    </div>
+    <div class="res-card">
+      <div class="res-name">📖 Судебные акты РФ — sudact.ru</div>
+      <a class="res-link" href="https://sudact.ru/" target="_blank">Открыть →</a>
+    </div>
+    <div class="res-card">
+      <div class="res-name">📰 Право.ru — новости и практика</div>
+      <a class="res-link" href="https://pravo.ru/" target="_blank">Открыть →</a>
+    </div>
+
+    <div style="margin-top:20px; padding:16px; background:var(--bg3); border:1px solid #C9A84C22; border-radius:10px; font-size:14px; color:var(--text-muted); line-height:1.8">
+      💡 <strong style="color:var(--gold-dim)">Совет на День 1:</strong> Начни с Конституции — прочитай хотя бы Главу 1 (ст. 1–16). Это займёт 10 минут и даст понимание основ государственного строя России. Без этого сложно понять остальные законы.
+    </div>
+  </div>
+
+</div>
+
+<script>
+  function showTab(id, btn) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    btn.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function toggleAnswer(btn) {
+    const box = btn.nextElementSibling;
+    const visible = box.classList.contains('visible');
+    box.classList.toggle('visible', !visible);
+    btn.textContent = visible ? 'Показать ответ' : 'Скрыть ответ';
+  }
+
+  let done = false;
+  function toggleComplete() {
+    done = !done;
+    const btn = document.getElementById('completeBtn');
+    btn.classList.toggle('done', done);
+    btn.textContent = done ? '🏆 День 1 пройден!' : '✓ Отметить день как пройденный';
+  }
+</script>
+</body>
+</html>

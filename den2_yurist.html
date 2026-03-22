@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>День 2 — Конституция РФ</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C9A84C;
+    --gold-dim: #8B6914;
+    --gold-glow: #E8C86A;
+    --bg: #080604;
+    --bg2: #110e06;
+    --bg3: #1a1208;
+    --text: #e8dcc8;
+    --text-dim: #a89878;
+    --text-muted: #6a5a3a;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Crimson Pro', Georgia, serif;
+    font-size: 17px;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background:
+      radial-gradient(ellipse 80% 50% at 20% 0%, #2a1e0433 0%, transparent 60%),
+      radial-gradient(ellipse 60% 40% at 80% 100%, #1a100233 0%, transparent 60%);
+    pointer-events: none; z-index: 0;
+  }
+
+  .header {
+    background: linear-gradient(180deg, #1a1208 0%, #0e0a04 100%);
+    border-bottom: 1px solid #C9A84C33;
+    padding: 20px 20px 16px;
+    position: sticky; top: 0; z-index: 100;
+  }
+  .header-badge { font-size: 10px; letter-spacing: 3px; color: var(--gold-dim); text-transform: uppercase; margin-bottom: 4px; }
+  .header-title { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 900; color: var(--gold); display: flex; align-items: center; gap: 10px; }
+  .header-sub { font-size: 13px; color: var(--text-muted); margin-top: 3px; }
+
+  .tabs {
+    display: flex; gap: 6px; padding: 14px 20px;
+    background: var(--bg2); border-bottom: 1px solid #C9A84C22;
+    overflow-x: auto; scrollbar-width: none;
+  }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tab {
+    flex-shrink: 0; padding: 8px 16px; border-radius: 8px;
+    border: 1px solid #C9A84C22; background: transparent;
+    color: var(--text-muted); font-family: 'Crimson Pro', serif;
+    font-size: 14px; cursor: pointer; transition: all 0.2s; white-space: nowrap;
+  }
+  .tab.active { background: linear-gradient(135deg, #C9A84C33, #C9A84C11); border-color: #C9A84C77; color: var(--gold); }
+  .tab:hover { border-color: #C9A84C44; color: var(--text-dim); }
+
+  .content { padding: 20px; position: relative; z-index: 1; max-width: 700px; margin: 0 auto; }
+  .section { display: none; animation: fadeIn 0.4s ease; }
+  .section.active { display: block; }
+  @keyframes fadeIn { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
+
+  .section-label { font-size: 10px; letter-spacing: 3px; color: var(--gold-dim); text-transform: uppercase; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 1px solid #C9A84C22; }
+
+  .theory-card { background: var(--bg3); border: 1px solid #C9A84C22; border-left: 3px solid var(--gold); border-radius: 12px; padding: 18px 18px 16px; margin-bottom: 16px; }
+  .theory-card h3 { font-family: 'Playfair Display', serif; font-size: 17px; font-weight: 700; color: var(--gold); margin-bottom: 12px; }
+  .theory-card p, .theory-card ul, .theory-card ol { color: var(--text-dim); font-size: 16px; line-height: 1.85; }
+  .theory-card ul, .theory-card ol { padding-left: 20px; }
+  .theory-card li { margin-bottom: 5px; }
+
+  .highlight-box { background: #C9A84C11; border: 1px solid #C9A84C33; border-radius: 8px; padding: 12px 14px; margin: 12px 0; font-size: 15px; color: var(--gold-dim); font-style: italic; }
+
+  .chapter-grid { display: grid; gap: 8px; margin-top: 12px; }
+  .chapter-item { background: #0e0c08; border-radius: 8px; padding: 10px 14px; border: 1px solid #C9A84C1a; display: flex; gap: 12px; align-items: flex-start; }
+  .ch-num { font-size: 11px; letter-spacing: 1px; text-transform: uppercase; color: var(--gold); font-weight: 700; flex-shrink: 0; min-width: 60px; padding-top: 2px; }
+  .ch-text { font-size: 15px; color: var(--text-dim); }
+  .ch-text strong { color: var(--text); }
+
+  .article-box { background: #0a0806; border: 1px solid #C9A84C33; border-radius: 10px; padding: 14px 16px; margin: 10px 0; }
+  .article-num { font-size: 11px; letter-spacing: 2px; color: var(--gold); text-transform: uppercase; margin-bottom: 6px; font-weight: 700; }
+  .article-text { font-size: 15px; color: var(--text-dim); line-height: 1.8; font-style: italic; }
+
+  .rights-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px; }
+  .right-tag { background: #C9A84C11; border: 1px solid #C9A84C33; border-radius: 8px; padding: 10px 12px; font-size: 13px; color: var(--gold-dim); text-align: center; line-height: 1.5; }
+
+  .task-card { background: var(--bg3); border: 1px solid #C9A84C22; border-radius: 12px; padding: 16px 18px; margin-bottom: 12px; display: flex; gap: 14px; }
+  .task-num { width: 32px; height: 32px; border-radius: 50%; flex-shrink: 0; background: #C9A84C22; border: 1px solid #C9A84C55; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: bold; color: var(--gold); }
+  .task-text { font-size: 16px; color: var(--text-dim); line-height: 1.7; }
+  .task-link a { color: var(--gold); font-size: 13px; text-decoration: none; border-bottom: 1px solid #C9A84C44; }
+
+  .terms-grid { display: grid; gap: 10px; }
+  .term-card { background: var(--bg3); border: 1px solid #C9A84C22; border-radius: 10px; padding: 14px 16px; }
+  .term-name { font-family: 'Playfair Display', serif; font-size: 16px; color: var(--gold); margin-bottom: 6px; }
+  .term-def { font-size: 15px; color: var(--text-dim); line-height: 1.7; }
+
+  .quiz-card { background: var(--bg3); border: 1px solid #C9A84C22; border-radius: 12px; padding: 18px; margin-bottom: 14px; }
+  .quiz-q { font-size: 16px; font-weight: 600; color: var(--text); margin-bottom: 12px; }
+  .quiz-input { width: 100%; background: #0e0c08; border: 1px solid #C9A84C33; color: var(--text); padding: 10px 14px; border-radius: 8px; font-family: 'Crimson Pro', serif; font-size: 15px; outline: none; transition: border-color 0.2s; }
+  .quiz-input:focus { border-color: var(--gold); }
+  .show-btn { margin-top: 10px; background: none; border: 1px solid #C9A84C33; color: var(--gold-dim); border-radius: 6px; padding: 6px 14px; font-family: 'Crimson Pro', serif; font-size: 13px; cursor: pointer; transition: all 0.2s; }
+  .show-btn:hover { border-color: var(--gold); color: var(--gold); }
+  .answer-box { display: none; margin-top: 10px; background: #C9A84C0d; border: 1px solid #C9A84C33; border-radius: 8px; padding: 12px 14px; font-size: 15px; color: var(--gold-dim); line-height: 1.7; }
+  .answer-box.visible { display: block; animation: fadeIn 0.3s ease; }
+
+  .res-card { background: var(--bg3); border: 1px solid #C9A84C22; border-radius: 10px; padding: 14px 16px; margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .res-name { font-size: 15px; color: var(--text-dim); }
+  .res-link { color: var(--gold); font-size: 12px; text-decoration: none; border: 1px solid #C9A84C44; border-radius: 5px; padding: 4px 12px; flex-shrink: 0; transition: all 0.2s; }
+  .res-link:hover { background: #C9A84C22; }
+
+  .progress-bar-wrap { background: #1a1208; border: 1px solid #C9A84C22; border-radius: 20px; height: 8px; overflow: hidden; margin: 6px 0 14px; }
+  .progress-bar { height: 100%; background: linear-gradient(90deg, #8B6914, #C9A84C, #E8C86A); border-radius: 20px; width: 6.6%; }
+
+  .complete-wrap { text-align: center; padding: 24px 0 8px; }
+  .complete-btn { background: linear-gradient(135deg, #C9A84C33, #C9A84C11); border: 1px solid #C9A84C66; color: var(--gold); border-radius: 10px; padding: 12px 32px; font-family: 'Playfair Display', serif; font-size: 16px; cursor: pointer; transition: all 0.3s; }
+  .complete-btn:hover { background: linear-gradient(135deg, #C9A84C55, #C9A84C22); }
+  .complete-btn.done { background: linear-gradient(135deg, #C9A84C66, #C9A84C33); }
+
+  .nav-days { display: flex; gap: 8px; justify-content: center; padding: 16px 0 4px; }
+  .nav-btn { background: #1a1208; border: 1px solid #C9A84C33; color: var(--gold-dim); border-radius: 8px; padding: 8px 20px; font-family: 'Crimson Pro', serif; font-size: 14px; cursor: pointer; }
+  .nav-btn:hover { border-color: var(--gold); color: var(--gold); }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-badge">⚖️ Академия Российского Права · 30 дней</div>
+  <div class="header-title">📜 День 2 — Конституция РФ</div>
+  <div class="header-sub">Основной закон государства · 137 статей · 9 глав</div>
+  <div class="progress-bar-wrap"><div class="progress-bar" style="width:6.6%"></div></div>
+</div>
+
+<div class="tabs">
+  <button class="tab active" onclick="showTab('theory', this)">📖 Теория</button>
+  <button class="tab" onclick="showTab('practice', this)">✏️ Практика</button>
+  <button class="tab" onclick="showTab('terms', this)">📌 Термины</button>
+  <button class="tab" onclick="showTab('quiz', this)">🧪 Тест</button>
+  <button class="tab" onclick="showTab('resources', this)">🔗 Источники</button>
+</div>
+
+<div class="content">
+
+  <!-- ====== THEORY ====== -->
+  <div class="section active" id="theory">
+    <div class="section-label">Теоретический материал — День 2</div>
+
+    <!-- CARD 1 -->
+    <div class="theory-card">
+      <h3>1. Что такое Конституция и зачем она нужна?</h3>
+      <p><strong style="color:var(--gold)">Конституция</strong> — это основной закон государства, обладающий высшей юридической силой. Все остальные законы, указы и постановления должны ей соответствовать.</p>
+      <div class="highlight-box">
+        📜 Действующая Конституция РФ принята на всенародном референдуме <strong>12 декабря 1993 года</strong>. Последние поправки внесены в <strong>2020 году</strong>.
+      </div>
+      <p>Конституция выполняет ключевые функции:</p>
+      <ul>
+        <li><strong>Учредительная</strong> — учреждает государственный строй и органы власти</li>
+        <li><strong>Организаторская</strong> — закрепляет систему госорганов и их полномочия</li>
+        <li><strong>Идеологическая</strong> — провозглашает ценности общества</li>
+        <li><strong>Юридическая</strong> — является основой всей правовой системы</li>
+      </ul>
+      <div class="highlight-box">
+        ⚠️ <strong>Прямое действие Конституции:</strong> граждане вправе непосредственно ссылаться на Конституцию в суде, даже если конкретного закона по вопросу нет (ст. 15 ч. 1).
+      </div>
+    </div>
+
+    <!-- CARD 2 -->
+    <div class="theory-card">
+      <h3>2. Структура Конституции РФ — 9 глав</h3>
+      <div class="chapter-grid">
+        <div class="chapter-item">
+          <span class="ch-num">Гл. 1<br>Ст. 1–16</span>
+          <span class="ch-text"><strong>Основы конституционного строя</strong> — Россия — демократическое федеративное правовое государство. Высшая ценность — человек, его права и свободы.</span>
+        </div>
+        <div class="chapter-item">
+          <span class="ch-num">Гл. 2<br>Ст. 17–64</span>
+          <span class="ch-text"><strong>Права и свободы человека и гражданина</strong> — личные, политические, экономические, социальные, культурные права. <em>Самая важная для юриста глава!</em></span>
+        </div>
+        <div class="chapter-item">
+          <span class="ch-num">Гл. 3<br>Ст. 65–79</span>
+          <span class="ch-text"><strong>Федеративное устройство</strong> — субъекты РФ, разграничение полномочий между федерацией и регионами.</span>
+        </div>
+        <div class="chapter-item">
+          <span class="ch-num">Гл. 4<br>Ст. 80–93</span>
+          <span class="ch-text"><strong>Президент РФ</strong> — гарант Конституции, верховный главнокомандующий, глава государства.</span>
+        </div>
+        <div class="chapter-item">
+          <span class="ch-num">Гл. 5<br>Ст. 94–109</span>
+          <span class="ch-text"><strong>Федеральное Собрание</strong> — Государственная Дума + Совет Федерации = парламент России.</span>
+        </div>
+        <div class="chapter-item">
+          <span class="ch-num">Гл. 6<br>Ст. 110–117</span>
+          <span class="ch-text"><strong>Правительство РФ</strong> — исполнительная власть, Председатель Правительства (Премьер-министр).</span>
+        </div>
+        <div class="chapter-item">
+          <span class="ch-num">Гл. 7<br>Ст. 118–129</span>
+          <span class="ch-text"><strong>Судебная власть и прокуратура</strong> — независимость судей, Конституционный Суд, Верховный Суд, прокуратура.</span>
+        </div>
+        <div class="chapter-item">
+          <span class="ch-num">Гл. 8<br>Ст. 130–133</span>
+          <span class="ch-text"><strong>Местное самоуправление</strong> — муниципальные образования, независимость от госвласти.</span>
+        </div>
+        <div class="chapter-item">
+          <span class="ch-num">Гл. 9<br>Ст. 134–137</span>
+          <span class="ch-text"><strong>Конституционные поправки</strong> — порядок изменения Конституции (сложный, чтобы защитить основной закон).</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARD 3 -->
+    <div class="theory-card">
+      <h3>3. Ключевые статьи — обязательно знать юристу</h3>
+
+      <div class="article-box">
+        <div class="article-num">Статья 1</div>
+        <div class="article-text">Россия — демократическое федеративное правовое государство с республиканской формой правления.</div>
+      </div>
+
+      <div class="article-box">
+        <div class="article-num">Статья 2</div>
+        <div class="article-text">Человек, его права и свободы являются высшей ценностью. Признание, соблюдение и защита прав и свобод человека и гражданина — обязанность государства.</div>
+      </div>
+
+      <div class="article-box">
+        <div class="article-num">Статья 15</div>
+        <div class="article-text">Конституция имеет высшую юридическую силу и прямое действие. Законы, противоречащие Конституции, не применяются.</div>
+      </div>
+
+      <div class="article-box">
+        <div class="article-num">Статья 17–18</div>
+        <div class="article-text">Права и свободы человека неотчуждаемы и принадлежат каждому от рождения. Они являются непосредственно действующими.</div>
+      </div>
+
+      <div class="article-box">
+        <div class="article-num">Статья 21</div>
+        <div class="article-text">Достоинство личности охраняется государством. Никто не должен подвергаться пыткам, насилию или унижающему достоинство обращению.</div>
+      </div>
+
+      <div class="article-box">
+        <div class="article-num">Статья 48</div>
+        <div class="article-text">Каждому гарантируется право на получение квалифицированной юридической помощи. В случаях, предусмотренных законом — бесплатно.</div>
+      </div>
+
+      <div class="article-box">
+        <div class="article-num">Статья 49</div>
+        <div class="article-text">Каждый обвиняемый в совершении преступления считается невиновным, пока его вина не будет доказана в порядке, предусмотренном законом (презумпция невиновности).</div>
+      </div>
+
+      <div class="article-box">
+        <div class="article-num">Статья 51</div>
+        <div class="article-text">Никто не обязан свидетельствовать против себя самого, своего супруга и близких родственников. (Иммунитет свидетеля)</div>
+      </div>
+    </div>
+
+    <!-- CARD 4 -->
+    <div class="theory-card">
+      <h3>4. Права и свободы граждан — классификация</h3>
+      <p>Глава 2 Конституции закрепляет <strong style="color:var(--gold)">пять групп прав</strong>:</p>
+      <div class="rights-grid">
+        <div class="right-tag">👤 <strong>Личные</strong><br>жизнь, свобода, неприкосновенность, тайна переписки</div>
+        <div class="right-tag">🗳️ <strong>Политические</strong><br>голосование, собрания, свобода слова, объединения</div>
+        <div class="right-tag">💰 <strong>Экономические</strong><br>собственность, труд, предпринимательство</div>
+        <div class="right-tag">🏥 <strong>Социальные</strong><br>жильё, охрана здоровья, образование, пенсия</div>
+        <div class="right-tag" style="grid-column: span 2">🎨 <strong>Культурные</strong><br>участие в культурной жизни, свобода творчества, доступ к культурным ценностям</div>
+      </div>
+      <div class="highlight-box" style="margin-top:12px">
+        ⚖️ <strong>Важно:</strong> Права могут быть ограничены федеральным законом только в той мере, в какой это необходимо для защиты конституционного строя, нравственности, здоровья, прав других лиц (ст. 55 ч. 3).
+      </div>
+    </div>
+
+    <!-- CARD 5 -->
+    <div class="theory-card">
+      <h3>5. Разделение властей в РФ</h3>
+      <p>Статья 10 Конституции закрепляет принцип <strong style="color:var(--gold)">разделения властей</strong> на три ветви:</p>
+      <div class="chapter-grid" style="margin-top:10px">
+        <div class="chapter-item">
+          <span class="ch-num" style="color:#E8C86A">🏛️<br>Законо-<br>датель-<br>ная</span>
+          <span class="ch-text"><strong>Федеральное Собрание</strong><br>• Государственная Дума (450 депутатов)<br>• Совет Федерации (по 2 сенатора от каждого субъекта)<br>Принимают законы, ратифицируют договоры</span>
+        </div>
+        <div class="chapter-item">
+          <span class="ch-num" style="color:#E8C86A">⚙️<br>Испол-<br>нитель-<br>ная</span>
+          <span class="ch-text"><strong>Правительство РФ</strong><br>• Председатель + федеральные министры<br>Исполняют законы, управляют государством<br><em>Президент — особое место в системе</em></span>
+        </div>
+        <div class="chapter-item">
+          <span class="ch-num" style="color:#E8C86A">⚖️<br>Судеб-<br>ная</span>
+          <span class="ch-text"><strong>Суды РФ</strong><br>• Конституционный Суд<br>• Верховный Суд<br>• Суды общей юрисдикции<br>Осуществляют правосудие, независимы</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="complete-wrap">
+      <button class="complete-btn" id="completeBtn" onclick="toggleComplete()">
+        ✓ Отметить день как пройденный
+      </button>
+    </div>
+  </div>
+
+  <!-- ====== PRACTICE ====== -->
+  <div class="section" id="practice">
+    <div class="section-label">Практические задания — День 2</div>
+
+    <div class="task-card">
+      <div class="task-num">1</div>
+      <div>
+        <div class="task-text">Открой Конституцию РФ и прочитай <strong>Главу 2 (ст. 17–64)</strong> — права и свободы. Найди и запиши <strong>5 прав</strong>, которые кажутся тебе наиболее важными для будущей работы юристом.</div>
+        <div class="task-link" style="margin-top:8px"><a href="https://www.consultant.ru/document/cons_doc_LAW_28399/b58b8bc4b5dea99c9d2f7b63c76fe603df706338/" target="_blank">→ Открыть Главу 2 Конституции</a></div>
+      </div>
+    </div>
+
+    <div class="task-card">
+      <div class="task-num">2</div>
+      <div>
+        <div class="task-text">Объясни своими словами <strong>презумпцию невиновности</strong> (ст. 49). Почему этот принцип критически важен для уголовного права? Что будет, если его нарушить?</div>
+      </div>
+    </div>
+
+    <div class="task-card">
+      <div class="task-num">3</div>
+      <div>
+        <div class="task-text">Определи, какая ветвь власти принимает решение в каждом случае:<br><br>
+        <em style="color:var(--gold-dim)">а) Принятие нового Уголовного кодекса<br>
+        б) Вынесение приговора по делу о краже<br>
+        в) Постановление о минимальном размере оплаты труда<br>
+        г) Помилование осуждённого</em></div>
+      </div>
+    </div>
+
+    <div class="task-card">
+      <div class="task-num">4</div>
+      <div>
+        <div class="task-text">Выучи наизусть или хорошо запомни <strong>статьи 1, 2, 15, 21, 48, 49, 51</strong>. Это основа, которую юрист должен знать без подсказок. Запиши их в краткой форме в тетрадь.</div>
+      </div>
+    </div>
+
+    <div class="task-card">
+      <div class="task-num">5</div>
+      <div>
+        <div class="task-text">Найди в интернете <strong>одно решение Конституционного Суда РФ</strong> (любое) на сайте ksrf.ru. Прочитай резолютивную часть. Что Суд постановил? Почему это важно?</div>
+        <div class="task-link" style="margin-top:8px"><a href="http://www.ksrf.ru/ru/Decision/Pages/default.aspx" target="_blank">→ Решения Конституционного Суда РФ</a></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====== TERMS ====== -->
+  <div class="section" id="terms">
+    <div class="section-label">Ключевые термины — День 2</div>
+    <div class="terms-grid">
+      <div class="term-card">
+        <div class="term-name">📜 Конституция</div>
+        <div class="term-def">Основной закон государства, обладающий высшей юридической силой и регулирующий основы общественного и государственного строя, права граждан.</div>
+      </div>
+      <div class="term-card">
+        <div class="term-name">⚖️ Презумпция невиновности</div>
+        <div class="term-def">Принцип, по которому обвиняемый считается невиновным до тех пор, пока его вина не будет доказана в установленном законом порядке и подтверждена вступившим в силу приговором суда (ст. 49 КРФ).</div>
+      </div>
+      <div class="term-card">
+        <div class="term-name">🔒 Иммунитет свидетеля</div>
+        <div class="term-def">Закреплённое в ст. 51 Конституции право не свидетельствовать против себя, супруга и близких родственников. Показания, данные под принуждением, юридически ничтожны.</div>
+      </div>
+      <div class="term-card">
+        <div class="term-name">🏛️ Разделение властей</div>
+        <div class="term-def">Конституционный принцип (ст. 10), по которому государственная власть делится на законодательную, исполнительную и судебную ветви, независимые друг от друга.</div>
+      </div>
+      <div class="term-card">
+        <div class="term-name">⚡ Прямое действие Конституции</div>
+        <div class="term-def">Норма ст. 15 ч. 1: Конституция применяется непосредственно, без дополнительного закона. Гражданин вправе ссылаться на неё напрямую в суде.</div>
+      </div>
+      <div class="term-card">
+        <div class="term-name">🏠 Федеративное государство</div>
+        <div class="term-def">Форма государственного устройства, при которой государство состоит из субъектов (республик, краёв, областей и др.), имеющих собственные органы власти и законодательство.</div>
+      </div>
+      <div class="term-card">
+        <div class="term-name">👤 Правосубъектность</div>
+        <div class="term-def">Способность лица иметь права и обязанности (правоспособность) и своими действиями приобретать их (дееспособность). У граждан РФ — с рождения / с 18 лет.</div>
+      </div>
+      <div class="term-card">
+        <div class="term-name">🔐 Неотчуждаемые права</div>
+        <div class="term-def">Права, которые не могут быть отняты у человека ни государством, ни другими лицами — право на жизнь, достоинство, свободу и личную неприкосновенность (ст. 17–22).</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====== QUIZ ====== -->
+  <div class="section" id="quiz">
+    <div class="section-label">Проверка знаний — 7 вопросов</div>
+
+    <div class="quiz-card">
+      <div class="quiz-q">1. Когда была принята Конституция РФ и сколько в ней статей?</div>
+      <input class="quiz-input" placeholder="Ваш ответ…">
+      <button class="show-btn" onclick="toggleAnswer(this)">Показать ответ</button>
+      <div class="answer-box">✓ Принята <strong>12 декабря 1993 года</strong> на всенародном голосовании. Содержит <strong>137 статей</strong> и 9 глав. Последние масштабные поправки — в 2020 году.</div>
+    </div>
+
+    <div class="quiz-card">
+      <div class="quiz-q">2. Что закреплено в статье 2 Конституции РФ?</div>
+      <input class="quiz-input" placeholder="Ваш ответ…">
+      <button class="show-btn" onclick="toggleAnswer(this)">Показать ответ</button>
+      <div class="answer-box">✓ <strong>Человек, его права и свободы — высшая ценность.</strong> Признание, соблюдение и защита прав и свобод человека — обязанность государства.</div>
+    </div>
+
+    <div class="quiz-card">
+      <div class="quiz-q">3. Что такое презумпция невиновности и в какой статье она закреплена?</div>
+      <input class="quiz-input" placeholder="Ваш ответ…">
+      <button class="show-btn" onclick="toggleAnswer(this)">Показать ответ</button>
+      <div class="answer-box">✓ <strong>Статья 49.</strong> Обвиняемый считается невиновным, пока его вина не доказана по закону. Неустранимые сомнения толкуются в пользу обвиняемого.</div>
+    </div>
+
+    <div class="quiz-card">
+      <div class="quiz-q">4. Назовите три ветви власти в РФ и соответствующие им органы.</div>
+      <input class="quiz-input" placeholder="Ваш ответ…">
+      <button class="show-btn" onclick="toggleAnswer(this)">Показать ответ</button>
+      <div class="answer-box">✓ <strong>Законодательная</strong> — Федеральное Собрание (Госдума + Совет Федерации). <strong>Исполнительная</strong> — Правительство РФ. <strong>Судебная</strong> — Конституционный Суд, Верховный Суд и иные суды.</div>
+    </div>
+
+    <div class="quiz-card">
+      <div class="quiz-q">5. Что означает «прямое действие Конституции»?</div>
+      <input class="quiz-input" placeholder="Ваш ответ…">
+      <button class="show-btn" onclick="toggleAnswer(this)">Показать ответ</button>
+      <div class="answer-box">✓ Конституция применяется <strong>непосредственно</strong>, без принятия дополнительных законов. Гражданин вправе ссылаться на неё в суде напрямую (ст. 15 ч. 1).</div>
+    </div>
+
+    <div class="quiz-card">
+      <div class="quiz-q">6. Какое право закреплено в статье 51 Конституции?</div>
+      <input class="quiz-input" placeholder="Ваш ответ…">
+      <button class="show-btn" onclick="toggleAnswer(this)">Показать ответ</button>
+      <div class="answer-box">✓ Право <strong>не свидетельствовать против себя, своего супруга и близких родственников.</strong> Это иммунитет свидетеля — важнейший принцип уголовного процесса.</div>
+    </div>
+
+    <div class="quiz-card">
+      <div class="quiz-q">7. На сколько глав делится Конституция РФ и какая самая важная для юриста?</div>
+      <input class="quiz-input" placeholder="Ваш ответ…">
+      <button class="show-btn" onclick="toggleAnswer(this)">Показать ответ</button>
+      <div class="answer-box">✓ Конституция делится на <strong>9 глав</strong>. Наиболее важная для юриста — <strong>Глава 2 (ст. 17–64)</strong> «Права и свободы человека и гражданина» — она защищает граждан в суде.</div>
+    </div>
+  </div>
+
+  <!-- ====== RESOURCES ====== -->
+  <div class="section" id="resources">
+    <div class="section-label">Источники для изучения — День 2</div>
+
+    <div class="res-card">
+      <div class="res-name">📜 Конституция РФ — полный текст (КонсультантПлюс)</div>
+      <a class="res-link" href="https://www.consultant.ru/document/cons_doc_LAW_28399/" target="_blank">Открыть →</a>
+    </div>
+    <div class="res-card">
+      <div class="res-name">🏛️ Конституционный Суд РФ — официальный сайт</div>
+      <a class="res-link" href="http://www.ksrf.ru/" target="_blank">Открыть →</a>
+    </div>
+    <div class="res-card">
+      <div class="res-name">⚖️ Постановления Конституционного Суда — база решений</div>
+      <a class="res-link" href="http://www.ksrf.ru/ru/Decision/Pages/default.aspx" target="_blank">Открыть →</a>
+    </div>
+    <div class="res-card">
+      <div class="res-name">📚 КонсультантПлюс — все законы РФ</div>
+      <a class="res-link" href="https://www.consultant.ru/" target="_blank">Открыть →</a>
+    </div>
+    <div class="res-card">
+      <div class="res-name">🏛️ Верховный Суд РФ — судебная практика</div>
+      <a class="res-link" href="https://www.vsrf.ru/" target="_blank">Открыть →</a>
+    </div>
+    <div class="res-card">
+      <div class="res-name">🎓 Правовая культура — комментарии к Конституции</div>
+      <a class="res-link" href="https://pravo.ru/" target="_blank">Открыть →</a>
+    </div>
+    <div class="res-card">
+      <div class="res-name">📖 Судебные акты РФ — sudact.ru</div>
+      <a class="res-link" href="https://sudact.ru/" target="_blank">Открыть →</a>
+    </div>
+    <div class="res-card">
+      <div class="res-name">⚡ Генеральная Прокуратура РФ</div>
+      <a class="res-link" href="https://genproc.gov.ru/" target="_blank">Открыть →</a>
+    </div>
+
+    <div style="margin-top:20px; padding:16px; background:var(--bg3); border:1px solid #C9A84C22; border-radius:10px; font-size:14px; color:var(--text-muted); line-height:1.8">
+      💡 <strong style="color:var(--gold-dim)">Совет на День 2:</strong> Выучи наизусть хотя бы статьи 1, 2, 15, 48, 49 и 51. Юрист, прокурор или следователь обязаны знать их без раздумий — они применяются в каждом деле. Повторяй их вслух как стихотворение.
+    </div>
+
+    <div class="nav-days">
+      <button class="nav-btn" onclick="alert('Откройте файл den1_yurist.html')">← День 1</button>
+      <button class="nav-btn" onclick="alert('День 3 скоро!')">День 3 →</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  function showTab(id, btn) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    btn.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function toggleAnswer(btn) {
+    const box = btn.nextElementSibling;
+    const visible = box.classList.contains('visible');
+    box.classList.toggle('visible', !visible);
+    btn.textContent = visible ? 'Показать ответ' : 'Скрыть ответ';
+  }
+
+  let done = false;
+  function toggleComplete() {
+    done = !done;
+    const btn = document.getElementById('completeBtn');
+    btn.classList.toggle('done', done);
+    btn.textContent = done ? '🏆 День 2 пройден!' : '✓ Отметить день как пройденный';
+  }
+</script>
+</body>
+</html>

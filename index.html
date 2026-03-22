@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Путь Юриста</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;1,300;1,600&family=IBM+Plex+Mono:wght@300;400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0d0f14;
+      --surface: #13161d;
+      --border: #1e2330;
+      --gold: #b8962e;
+      --gold-light: #d4b04a;
+      --text: #e8e2d4;
+      --muted: #5a6070;
+      --accent: #8b1a1a;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'IBM Plex Mono', monospace;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Subtle grid background */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(184,150,46,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(184,150,46,0.03) 1px, transparent 1px);
+      background-size: 48px 48px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Top gold line */
+    .top-bar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      z-index: 50;
+    }
+
+    /* Header */
+    header {
+      position: relative;
+      z-index: 1;
+      padding: 70px 64px 0;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: start;
+      gap: 40px;
+    }
+
+    .emblem {
+      width: 56px;
+      height: 56px;
+      border: 1px solid var(--gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      color: var(--gold);
+      margin-bottom: 24px;
+      position: relative;
+    }
+
+    .emblem::before, .emblem::after {
+      content: '';
+      position: absolute;
+      width: 8px; height: 8px;
+      border: 1px solid var(--gold);
+    }
+    .emblem::before { top: -4px; left: -4px; }
+    .emblem::after  { bottom: -4px; right: -4px; }
+
+    .title-block h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(3.2rem, 7vw, 6.5rem);
+      line-height: 0.92;
+      letter-spacing: -0.01em;
+      color: var(--text);
+    }
+
+    .title-block h1 em {
+      font-style: italic;
+      color: var(--gold);
+    }
+
+    .title-block .subtitle {
+      margin-top: 20px;
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .title-block .subtitle span {
+      color: var(--gold);
+      margin: 0 8px;
+    }
+
+    /* Counter */
+    .counter {
+      text-align: right;
+      padding-top: 12px;
+    }
+
+    .counter .num {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 600;
+      font-size: 5.5rem;
+      line-height: 1;
+      color: var(--gold);
+      display: block;
+    }
+
+    .counter .label {
+      font-size: 0.55rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    /* Divider */
+    .divider {
+      position: relative;
+      z-index: 1;
+      margin: 44px 64px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .divider-icon {
+      color: var(--gold);
+      font-size: 0.9rem;
+      opacity: 0.6;
+    }
+
+    /* Controls */
+    .controls {
+      position: relative;
+      z-index: 1;
+      padding: 0 64px 32px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .search-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border: 1px solid var(--border);
+      padding: 8px 16px;
+      background: var(--surface);
+      transition: border-color 0.2s;
+    }
+
+    .search-wrap:focus-within { border-color: var(--gold); }
+
+    .search-wrap label {
+      font-size: 0.55rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .search-wrap input {
+      background: none;
+      border: none;
+      outline: none;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.78rem;
+      color: var(--text);
+      width: 120px;
+    }
+
+    .search-wrap input::placeholder { color: var(--muted); }
+
+    .view-toggle {
+      margin-left: auto;
+      display: flex;
+    }
+
+    .view-btn {
+      background: none;
+      border: 1px solid var(--border);
+      padding: 8px 16px;
+      cursor: pointer;
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-family: 'IBM Plex Mono', monospace;
+      transition: all 0.2s;
+    }
+
+    .view-btn + .view-btn { border-left: none; }
+
+    .view-btn.active {
+      background: var(--gold);
+      color: var(--bg);
+      border-color: var(--gold);
+    }
+
+    /* Grid */
+    .grid {
+      position: relative;
+      z-index: 1;
+      padding: 0 56px 100px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+      gap: 12px;
+    }
+
+    .grid.list-view {
+      grid-template-columns: 1fr;
+      gap: 2px;
+    }
+
+    /* Card */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 32px 24px 24px;
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.25s, transform 0.25s;
+      animation: appear 0.45s both;
+    }
+
+    @keyframes appear {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .card::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--gold);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+      border-color: var(--gold);
+      transform: translateY(-2px);
+    }
+
+    .card:hover::after { transform: scaleX(1); }
+
+    .card-tag {
+      font-size: 0.55rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+
+    .card-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 600;
+      font-size: 3.2rem;
+      line-height: 1;
+      color: var(--text);
+    }
+
+    .card-num span {
+      font-size: 1.1rem;
+      color: var(--muted);
+      font-weight: 300;
+      margin-left: 2px;
+    }
+
+    .card-corner {
+      position: absolute;
+      top: 14px; right: 16px;
+      width: 20px; height: 20px;
+      border-top: 1px solid var(--border);
+      border-right: 1px solid var(--border);
+      transition: border-color 0.25s;
+    }
+
+    .card:hover .card-corner { border-color: var(--gold); }
+
+    .card-arrow {
+      position: absolute;
+      bottom: 18px; right: 20px;
+      color: var(--gold);
+      font-size: 1rem;
+      opacity: 0;
+      transform: translateX(-6px);
+      transition: all 0.25s;
+    }
+
+    .card:hover .card-arrow { opacity: 1; transform: translateX(0); }
+
+    .card-filename {
+      display: none;
+      font-size: 0.65rem;
+      color: var(--muted);
+      margin-top: 8px;
+    }
+
+    /* List view */
+    .list-view .card {
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      gap: 40px;
+    }
+
+    .list-view .card-tag { margin-bottom: 0; min-width: 70px; }
+    .list-view .card-num { font-size: 1.8rem; }
+    .list-view .card-filename { display: block; margin-top: 0; flex: 1; }
+    .list-view .card-arrow { position: static; opacity: 0.4; transform: none; }
+    .list-view .card:hover .card-arrow { opacity: 1; }
+    .list-view .card-corner { display: none; }
+
+    /* Empty */
+    .empty {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 100px 20px;
+      color: var(--muted);
+    }
+
+    .empty .empty-symbol {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 4rem;
+      color: var(--border);
+      margin-bottom: 20px;
+    }
+
+    .empty p {
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+    }
+
+    /* Footer bar */
+    .footer-bar {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      height: 36px;
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      padding: 0 64px;
+      gap: 32px;
+      z-index: 50;
+    }
+
+    .footer-bar .f-label {
+      font-size: 0.55rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .progress-track {
+      flex: 1;
+      height: 3px;
+      background: var(--border);
+      position: relative;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--gold));
+      transition: width 0.8s ease;
+      position: relative;
+    }
+
+    .progress-fill::after {
+      content: '';
+      position: absolute;
+      right: 0; top: -3px;
+      width: 9px; height: 9px;
+      border-radius: 50%;
+      background: var(--gold-light);
+      box-shadow: 0 0 8px var(--gold);
+    }
+
+    .footer-bar .f-pct {
+      font-size: 0.6rem;
+      color: var(--gold);
+      min-width: 36px;
+      text-align: right;
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 52px; right: 24px;
+      background: var(--surface);
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      padding: 10px 20px;
+      font-size: 0.65rem;
+      letter-spacing: 0.06em;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: all 0.3s;
+      pointer-events: none;
+      z-index: 99;
+    }
+
+    .toast.show { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 600px) {
+      header, .controls { padding-left: 20px; padding-right: 20px; }
+      .divider { margin-left: 20px; margin-right: 20px; }
+      .grid { padding-left: 16px; padding-right: 16px; }
+      .footer-bar { padding: 0 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="top-bar"></div>
+
+  <header>
+    <div class="title-block">
+      <div class="emblem">⚖</div>
+      <h1>Путь<br /><em>Юриста</em></h1>
+      <p class="subtitle">Ежедневное изучение права <span>§</span> Юриспруденция</p>
+    </div>
+    <div class="counter">
+      <span class="num" id="dayCount">0</span>
+      <div class="label">дней пройдено</div>
+    </div>
+  </header>
+
+  <div class="divider">
+    <span class="divider-icon">§</span>
+  </div>
+
+  <div class="controls">
+    <div class="search-wrap">
+      <label for="searchInput">День №</label>
+      <input id="searchInput" type="text" placeholder="1, 2, 3…" oninput="filterCards()" />
+    </div>
+    <div class="view-toggle">
+      <button class="view-btn active" id="gridBtn" onclick="setView('grid')">Сетка</button>
+      <button class="view-btn" id="listBtn" onclick="setView('list')">Список</button>
+    </div>
+  </div>
+
+  <div class="grid" id="grid"></div>
+
+  <div class="footer-bar">
+    <span class="f-label">Прогресс</span>
+    <div class="progress-track">
+      <div class="progress-fill" id="progressFill" style="width:0%"></div>
+    </div>
+    <span class="f-pct" id="progressPct">0%</span>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    const FILE_PREFIX = 'den';
+    const FILE_SUFFIX = '_yurist';
+    const FILE_EXT    = '.html';
+    const GOAL_DAYS   = 100;
+
+    let allDays = [];
+    let currentView = 'grid';
+
+    async function detectDays() {
+      const probes = [];
+      for (let i = 1; i <= 365; i++) {
+        probes.push(
+          fetch(`${FILE_PREFIX}${i}${FILE_SUFFIX}${FILE_EXT}`, { method: 'HEAD' })
+            .then(r => r.ok ? i : null)
+            .catch(() => null)
+        );
+      }
+      return (await Promise.all(probes)).filter(Boolean);
+    }
+
+    function buildCards(days) {
+      allDays = days;
+      document.getElementById('dayCount').textContent = days.length;
+
+      const pct = Math.min(100, Math.round((days.length / GOAL_DAYS) * 100));
+      document.getElementById('progressFill').style.width = pct + '%';
+      document.getElementById('progressPct').textContent = pct + '%';
+
+      renderCards(days);
+    }
+
+    function renderCards(days) {
+      const grid = document.getElementById('grid');
+      grid.innerHTML = '';
+
+      if (days.length === 0) {
+        grid.innerHTML = `
+          <div class="empty">
+            <div class="empty-symbol">§</div>
+            <p>Файлы не найдены. Добавьте den1_yurist.html чтобы начать.</p>
+          </div>`;
+        return;
+      }
+
+      days.forEach((day, idx) => {
+        const href = `${FILE_PREFIX}${day}${FILE_SUFFIX}${FILE_EXT}`;
+        const a = document.createElement('a');
+        a.className = 'card';
+        a.href = href;
+        a.style.animationDelay = `${idx * 35}ms`;
+        a.innerHTML = `
+          <div class="card-corner"></div>
+          <div class="card-tag">День</div>
+          <div class="card-num">${String(day).padStart(2,'0')}<span>§</span></div>
+          <div class="card-filename">${href}</div>
+          <div class="card-arrow">→</div>
+        `;
+        grid.appendChild(a);
+      });
+
+      if (currentView === 'list') {
+        grid.querySelectorAll('.card-filename').forEach(el => el.style.display = 'block');
+      }
+    }
+
+    function filterCards() {
+      const q = document.getElementById('searchInput').value.trim();
+      renderCards(q ? allDays.filter(d => String(d).includes(q)) : allDays);
+    }
+
+    function setView(v) {
+      currentView = v;
+      const grid = document.getElementById('grid');
+      const isListView = v === 'list';
+      grid.classList.toggle('list-view', isListView);
+      grid.querySelectorAll('.card-filename').forEach(el => {
+        el.style.display = isListView ? 'block' : 'none';
+      });
+      document.getElementById('listBtn').classList.toggle('active', isListView);
+      document.getElementById('gridBtn').classList.toggle('active', !isListView);
+    }
+
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 2800);
+    }
+
+    (async () => {
+      const days = await detectDays();
+      buildCards(days);
+      if (days.length > 0) {
+        showToast(`Загружено ${days.length} ${days.length === 1 ? 'день' : 'дней'}`);
+      }
+    })();
+  </script>
+</body>
+</html>
