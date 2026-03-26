@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>День 4 — Гражданское право</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root { --gold:#C9A84C;--gold-dim:#8B6914;--bg:#080604;--bg2:#110e06;--bg3:#1a1208;--text:#e8dcc8;--text-dim:#a89878;--text-muted:#6a5a3a; }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--text);font-family:'Crimson Pro',Georgia,serif;font-size:17px;line-height:1.7;min-height:100vh}
+  body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 80% 50% at 20% 0%,#2a1e0433 0%,transparent 60%),radial-gradient(ellipse 60% 40% at 80% 100%,#1a100233 0%,transparent 60%);pointer-events:none;z-index:0}
+  .header{background:linear-gradient(180deg,#1a1208 0%,#0e0a04 100%);border-bottom:1px solid #C9A84C33;padding:18px 20px 12px;position:sticky;top:0;z-index:100}
+  .header-badge{font-size:10px;letter-spacing:3px;color:var(--gold-dim);text-transform:uppercase;margin-bottom:4px}
+  .header-title{font-family:'Playfair Display',serif;font-size:21px;font-weight:900;color:var(--gold)}
+  .header-sub{font-size:13px;color:var(--text-muted);margin-top:3px}
+  .progress-bar-wrap{background:#1a1208;border:1px solid #C9A84C22;border-radius:20px;height:7px;overflow:hidden;margin-top:10px}
+  .progress-bar{height:100%;background:linear-gradient(90deg,#8B6914,#C9A84C,#E8C86A);border-radius:20px;width:13.3%}
+  .tabs{display:flex;gap:6px;padding:12px 20px;background:var(--bg2);border-bottom:1px solid #C9A84C22;overflow-x:auto;scrollbar-width:none}
+  .tabs::-webkit-scrollbar{display:none}
+  .tab{flex-shrink:0;padding:8px 16px;border-radius:8px;border:1px solid #C9A84C22;background:transparent;color:var(--text-muted);font-family:'Crimson Pro',serif;font-size:14px;cursor:pointer;transition:all 0.2s;white-space:nowrap}
+  .tab.active{background:linear-gradient(135deg,#C9A84C33,#C9A84C11);border-color:#C9A84C77;color:var(--gold)}
+  .content{padding:20px;position:relative;z-index:1;max-width:700px;margin:0 auto}
+  .section{display:none;animation:fadeIn 0.4s ease}
+  .section.active{display:block}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+  .section-label{font-size:10px;letter-spacing:3px;color:var(--gold-dim);text-transform:uppercase;margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid #C9A84C22}
+  .card{background:var(--bg3);border:1px solid #C9A84C22;border-left:3px solid var(--gold);border-radius:12px;padding:18px;margin-bottom:16px}
+  .card h3{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:var(--gold);margin-bottom:12px}
+  .card p,.card ul,.card ol{color:var(--text-dim);font-size:16px;line-height:1.85}
+  .card ul,.card ol{padding-left:20px}
+  .card li{margin-bottom:5px}
+  .hl{background:#C9A84C11;border:1px solid #C9A84C33;border-radius:8px;padding:12px 14px;margin:12px 0;font-size:15px;color:var(--gold-dim)}
+  .row{background:#0e0c08;border:1px solid #C9A84C1a;border-radius:8px;padding:10px 14px;display:flex;gap:12px;align-items:flex-start;margin-bottom:6px}
+  .rlabel{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--gold);font-weight:700;flex-shrink:0;min-width:90px;padding-top:2px}
+  .rtext{font-size:15px;color:var(--text-dim);line-height:1.7}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+  .box{background:#0e0c08;border:1px solid #C9A84C22;border-radius:8px;padding:12px 14px}
+  .box-title{font-size:13px;font-weight:700;color:var(--gold);margin-bottom:8px}
+  .box-body{font-size:14px;color:var(--text-dim);line-height:1.8}
+  .ex{background:#0a0806;border:1px solid #C9A84C33;border-radius:10px;padding:14px 16px;margin:10px 0}
+  .ex-label{font-size:11px;letter-spacing:2px;color:var(--gold);text-transform:uppercase;margin-bottom:6px;font-weight:700}
+  .ex-text{font-size:15px;color:var(--text-dim);line-height:1.8}
+  .task-card{background:var(--bg3);border:1px solid #C9A84C22;border-radius:12px;padding:16px 18px;margin-bottom:12px;display:flex;gap:14px}
+  .task-num{width:32px;height:32px;border-radius:50%;flex-shrink:0;background:#C9A84C22;border:1px solid #C9A84C55;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:bold;color:var(--gold)}
+  .task-text{font-size:16px;color:var(--text-dim);line-height:1.75}
+  .term-card{background:var(--bg3);border:1px solid #C9A84C22;border-radius:10px;padding:14px 16px;margin-bottom:10px}
+  .term-name{font-family:'Playfair Display',serif;font-size:16px;color:var(--gold);margin-bottom:6px}
+  .term-def{font-size:15px;color:var(--text-dim);line-height:1.7}
+  .quiz-card{background:var(--bg3);border:1px solid #C9A84C22;border-radius:12px;padding:18px;margin-bottom:14px}
+  .quiz-q{font-size:16px;font-weight:600;color:var(--text);margin-bottom:12px;line-height:1.5}
+  .qi{width:100%;background:#0e0c08;border:1px solid #C9A84C33;color:var(--text);padding:10px 14px;border-radius:8px;font-family:'Crimson Pro',serif;font-size:15px;outline:none}
+  .qi:focus{border-color:var(--gold)}
+  .sb{margin-top:10px;background:none;border:1px solid #C9A84C33;color:var(--gold-dim);border-radius:6px;padding:6px 14px;font-family:'Crimson Pro',serif;font-size:13px;cursor:pointer}
+  .ab{display:none;margin-top:10px;background:#C9A84C0d;border:1px solid #C9A84C33;border-radius:8px;padding:12px 14px;font-size:15px;color:var(--gold-dim);line-height:1.7}
+  .ab.visible{display:block;animation:fadeIn 0.3s ease}
+  .res-card{background:var(--bg3);border:1px solid #C9A84C22;border-radius:10px;padding:14px 16px;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .res-name{font-size:15px;color:var(--text-dim)}
+  .res-link{color:var(--gold);font-size:12px;text-decoration:none;border:1px solid #C9A84C44;border-radius:5px;padding:4px 12px;flex-shrink:0}
+  .complete-wrap{text-align:center;padding:24px 0 8px}
+  .complete-btn{background:linear-gradient(135deg,#C9A84C33,#C9A84C11);border:1px solid #C9A84C66;color:var(--gold);border-radius:10px;padding:12px 32px;font-family:'Playfair Display',serif;font-size:16px;cursor:pointer;transition:all 0.3s}
+  .complete-btn.done{background:linear-gradient(135deg,#C9A84C66,#C9A84C33)}
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="header-badge">⚖️ Академия Российского Права · 30 дней</div>
+  <div class="header-title">🤝 День 4 — Гражданское право</div>
+  <div class="header-sub">Имущество · Сделки · Договоры · Ответственность</div>
+  <div class="progress-bar-wrap"><div class="progress-bar"></div></div>
+</div>
+<div class="tabs">
+  <button class="tab active" onclick="showTab('theory',this)">📖 Теория</button>
+  <button class="tab" onclick="showTab('practice',this)">✏️ Практика</button>
+  <button class="tab" onclick="showTab('terms',this)">📌 Термины</button>
+  <button class="tab" onclick="showTab('quiz',this)">🧪 Тест</button>
+  <button class="tab" onclick="showTab('resources',this)">🔗 Источники</button>
+</div>
+<div class="content">
+
+  <div class="section active" id="theory">
+    <div class="section-label">Теоретический материал — День 4</div>
+
+    <div class="card">
+      <h3>1. Что регулирует гражданское право?</h3>
+      <p><strong style="color:var(--gold)">Гражданское право</strong> — отрасль частного права, регулирующая имущественные и личные неимущественные отношения между равноправными субъектами на основе диспозитивного метода.</p>
+      <div class="hl">📚 Основной источник — <strong>Гражданский кодекс РФ (ГК РФ)</strong>, состоящий из 4 частей:<br>Часть 1 (1994) — общие положения, вещное право<br>Часть 2 (1996) — обязательственное право, договоры<br>Часть 3 (2001) — наследственное право, МЧП<br>Часть 4 (2006) — интеллектуальная собственность</div>
+      <p>Гражданское право регулирует:</p>
+      <ul>
+        <li>Отношения собственности (владение, пользование, распоряжение)</li>
+        <li>Договорные отношения (купля-продажа, аренда, подряд)</li>
+        <li>Наследование имущества</li>
+        <li>Защиту чести, достоинства, деловой репутации</li>
+        <li>Возмещение вреда (деликты)</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>2. Право собственности — триада полномочий</h3>
+      <p>Право собственности — абсолютное вещное право, дающее <strong style="color:var(--gold)">три полномочия</strong>:</p>
+      <div style="margin-top:10px">
+        <div class="row"><span class="rlabel">👁️ Владение</span><span class="rtext">Фактическое господство над вещью — физически держать, хранить, иметь у себя</span></div>
+        <div class="row"><span class="rlabel">⚙️ Пользование</span><span class="rtext">Извлечение полезных свойств вещи — жить в квартире, ездить на машине, получать урожай</span></div>
+        <div class="row"><span class="rlabel">📋 Распоряжение</span><span class="rtext">Определение юридической судьбы вещи — продать, подарить, заложить, уничтожить</span></div>
+      </div>
+      <div class="hl">⚠️ Только собственник обладает всеми тремя полномочиями одновременно. Арендатор — только владеет и пользуется, но не распоряжается.</div>
+    </div>
+
+    <div class="card">
+      <h3>3. Сделки — основа гражданского оборота</h3>
+      <p><strong style="color:var(--gold)">Сделка</strong> — действие граждан и юридических лиц, направленное на установление, изменение или прекращение гражданских прав и обязанностей (ст. 153 ГК РФ).</p>
+      <div class="two">
+        <div class="box"><div class="box-title">Односторонние</div><div class="box-body">Воля одного лица:<br>• Завещание<br>• Отказ от наследства<br>• Выдача доверенности</div></div>
+        <div class="box"><div class="box-title">Двух и многосторонние</div><div class="box-body">Договоры — совпадение воли двух и более лиц:<br>• Купля-продажа<br>• Аренда, подряд<br>• Займ, дарение</div></div>
+      </div>
+      <div class="hl" style="margin-top:12px">📌 <strong>Условия действительности сделки:</strong> дееспособность участников + законность содержания + свобода воли + надлежащая форма.</div>
+      <p style="margin-top:10px">Формы сделок:</p>
+      <div class="row" style="margin-top:8px"><span class="rlabel">Устная</span><span class="rtext">Мелкие бытовые сделки, исполняемые при совершении (купить хлеб)</span></div>
+      <div class="row"><span class="rlabel">Простая письменная</span><span class="rtext">Сделки на сумму свыше 10 000 руб., займы, трудовые договоры</span></div>
+      <div class="row"><span class="rlabel">Нотариальная</span><span class="rtext">Завещания, ипотека, брачный договор, отчуждение долей в ООО</span></div>
+      <div class="row"><span class="rlabel">Регистрация</span><span class="rtext">Сделки с недвижимостью — обязательная гос. регистрация в Росреестре</span></div>
+    </div>
+
+    <div class="card">
+      <h3>4. Недействительные сделки</h3>
+      <p>Сделка может быть <strong style="color:var(--gold)">ничтожной</strong> (недействительна с момента совершения) или <strong style="color:var(--gold)">оспоримой</strong> (недействительна по решению суда).</p>
+      <div class="two">
+        <div class="box"><div class="box-title">❌ Ничтожные (ст. 168–172)</div><div class="box-body">• Противоречат закону<br>• Мнимые и притворные<br>• Совершены недееспособным<br>• Нарушают основы правопорядка</div></div>
+        <div class="box"><div class="box-title">⚠️ Оспоримые (ст. 173–179)</div><div class="box-body">• Под влиянием заблуждения<br>• Обмана, угрозы, насилия<br>• Несовершеннолетним без согласия родителей<br>• Крупные сделки без одобрения</div></div>
+      </div>
+      <div class="hl">⚖️ Последствие недействительности — <strong>реституция</strong>: каждая сторона возвращает другой всё полученное по сделке.</div>
+    </div>
+
+    <div class="card">
+      <h3>5. Договор — главный инструмент гражданского права</h3>
+      <p><strong style="color:var(--gold)">Договор</strong> — соглашение двух или более лиц об установлении, изменении или прекращении гражданских прав и обязанностей (ст. 420 ГК).</p>
+      <p style="margin-top:8px">Принцип <strong style="color:var(--gold)">свободы договора</strong> (ст. 421): стороны вправе заключить любой договор, не противоречащий закону, в том числе не предусмотренный ГК.</p>
+      <div style="margin-top:10px">
+        <div class="row"><span class="rlabel">Существенные условия</span><span class="rtext">Без согласования — договор не заключён. Для купли-продажи: предмет + цена. Для аренды: предмет + срок.</span></div>
+        <div class="row"><span class="rlabel">Обычные условия</span><span class="rtext">Включаются автоматически из закона (если стороны не оговорили иное)</span></div>
+        <div class="row"><span class="rlabel">Случайные условия</span><span class="rtext">Включаются по желанию сторон, изменяя диспозитивные нормы закона</span></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>6. Гражданско-правовая ответственность</h3>
+      <p>Основание — <strong style="color:var(--gold)">гражданское правонарушение</strong> (деликт). Главный принцип: <em>полное возмещение убытков</em> (ст. 15 ГК).</p>
+      <div class="row"><span class="rlabel">Убытки</span><span class="rtext"><strong>Реальный ущерб</strong> (фактические потери) + <strong>упущенная выгода</strong> (неполученные доходы)</span></div>
+      <div class="row"><span class="rlabel">Неустойка</span><span class="rtext">Заранее определённая договором или законом сумма за нарушение</span></div>
+      <div class="row"><span class="rlabel">Вина</span><span class="rtext">Как правило, обязательна. Исключение: ответственность без вины — владелец источника повышенной опасности (автомобиль, завод)</span></div>
+      <div class="ex"><div class="ex-label">Пример</div><div class="ex-text">Подрядчик не сдал объект вовремя → заказчик вправе требовать неустойку по договору + возмещение убытков (затраты на аренду временного помещения + упущенная прибыль от простоя).</div></div>
+    </div>
+
+    <div class="complete-wrap"><button class="complete-btn" id="completeBtn" onclick="toggleComplete()">✓ Отметить день как пройденный</button></div>
+  </div>
+
+  <div class="section" id="practice">
+    <div class="section-label">Практические задания — День 4</div>
+    <div class="task-card"><div class="task-num">1</div><div class="task-text">Определи, какими полномочиями (владение, пользование, распоряжение) обладают:<br><br><em style="color:var(--gold-dim)">а) Арендатор квартиры<br>б) Залогодержатель (банк, принявший квартиру в залог по ипотеке)<br>в) Собственник дачи, сдавший её в аренду<br>г) Хранитель вещи на складе</em></div></div>
+    <div class="task-card"><div class="task-num">2</div><div class="task-text">Определи вид и форму каждой сделки:<br><br><em style="color:var(--gold-dim)">а) Покупка кофе в кафе<br>б) Оформление ипотеки на квартиру<br>в) Составление завещания<br>г) Договор поставки товаров между ООО на сумму 500 000 руб.</em></div></div>
+    <div class="task-card"><div class="task-num">3</div><div class="task-text">Прочитай <strong>ст. 421, 432, 454, 606 ГК РФ</strong> (свобода договора, существенные условия, купля-продажа, аренда). Выпиши главное условие каждого договора без которого он считается незаключённым.</div></div>
+    <div class="task-card"><div class="task-num">4</div><div class="task-text">Ситуация: <em style="color:var(--gold-dim)">Продавец продал квартиру покупателю. Через месяц выяснилось, что продавец в момент сделки был признан судом недееспособным.</em><br><br>Какова судьба этой сделки? Что должно произойти? На какие статьи ГК ты опираешься?</div></div>
+    <div class="task-card"><div class="task-num">5</div><div class="task-text">Составь краткий <strong>договор купли-продажи</strong> телефона между двумя физическими лицами. Укажи: стороны, предмет, цену, порядок передачи, ответственность за недостатки.</div></div>
+  </div>
+
+  <div class="section" id="terms">
+    <div class="section-label">Ключевые термины — День 4</div>
+    <div class="term-card"><div class="term-name">🤝 Гражданское право</div><div class="term-def">Отрасль частного права, регулирующая имущественные и личные неимущественные отношения равноправных субъектов на основе диспозитивного метода.</div></div>
+    <div class="term-card"><div class="term-name">🏠 Право собственности</div><div class="term-def">Абсолютное вещное право владеть, пользоваться и распоряжаться имуществом по своему усмотрению, не нарушая права других лиц (ст. 209 ГК РФ).</div></div>
+    <div class="term-card"><div class="term-name">📝 Сделка</div><div class="term-def">Действие граждан и юридических лиц, направленное на установление, изменение или прекращение гражданских прав и обязанностей (ст. 153 ГК РФ).</div></div>
+    <div class="term-card"><div class="term-name">📋 Договор</div><div class="term-def">Соглашение двух или более лиц об установлении, изменении или прекращении гражданских прав и обязанностей (ст. 420 ГК РФ).</div></div>
+    <div class="term-card"><div class="term-name">❌ Ничтожная сделка</div><div class="term-def">Сделка, недействительная с момента совершения независимо от признания судом (противоречие закону, совершение недееспособным, мнимость).</div></div>
+    <div class="term-card"><div class="term-name">⚠️ Оспоримая сделка</div><div class="term-def">Сделка, которая может быть признана недействительной судом по иску заинтересованного лица (обман, заблуждение, угроза).</div></div>
+    <div class="term-card"><div class="term-name">💰 Убытки</div><div class="term-def">Реальный ущерб (фактические потери и расходы) плюс упущенная выгода (неполученные доходы). Подлежат полному возмещению (ст. 15 ГК РФ).</div></div>
+    <div class="term-card"><div class="term-name">🔄 Реституция</div><div class="term-def">Последствие недействительности сделки — возврат сторонами всего полученного по ней в первоначальное положение.</div></div>
+    <div class="term-card"><div class="term-name">📌 Неустойка</div><div class="term-def">Определённая договором или законом денежная сумма, подлежащая уплате должником кредитору при неисполнении или ненадлежащем исполнении обязательства.</div></div>
+  </div>
+
+  <div class="section" id="quiz">
+    <div class="section-label">Проверка знаний — 7 вопросов</div>
+    <div class="quiz-card"><div class="quiz-q">1. Назовите три правомочия собственника и объясните каждое.</div><input class="qi" placeholder="Ваш ответ…"><button class="sb" onclick="toggleAnswer(this)">Показать ответ</button><div class="ab">✓ <strong>Владение</strong> — фактическое господство над вещью. <strong>Пользование</strong> — извлечение полезных свойств. <strong>Распоряжение</strong> — определение юридической судьбы вещи (продать, подарить, заложить).</div></div>
+    <div class="quiz-card"><div class="quiz-q">2. Из скольких частей состоит ГК РФ и что регулирует каждая?</div><input class="qi" placeholder="Ваш ответ…"><button class="sb" onclick="toggleAnswer(this)">Показать ответ</button><div class="ab">✓ <strong>4 части:</strong> Часть 1 — общие положения, вещное право (1994). Часть 2 — обязательства, договоры (1996). Часть 3 — наследование, МЧП (2001). Часть 4 — интеллектуальная собственность (2006).</div></div>
+    <div class="quiz-card"><div class="quiz-q">3. Чем ничтожная сделка отличается от оспоримой?</div><input class="qi" placeholder="Ваш ответ…"><button class="sb" onclick="toggleAnswer(this)">Показать ответ</button><div class="ab">✓ <strong>Ничтожная</strong> недействительна автоматически с момента совершения (без решения суда). <strong>Оспоримая</strong> действительна, пока суд не признает её недействительной по иску заинтересованного лица.</div></div>
+    <div class="quiz-card"><div class="quiz-q">4. Что такое реституция?</div><input class="qi" placeholder="Ваш ответ…"><button class="sb" onclick="toggleAnswer(this)">Показать ответ</button><div class="ab">✓ <strong>Реституция</strong> — возврат сторон в первоначальное положение после признания сделки недействительной. Каждая сторона возвращает другой всё полученное по сделке.</div></div>
+    <div class="quiz-card"><div class="quiz-q">5. Что входит в понятие «убытки» по ГК РФ?</div><input class="qi" placeholder="Ваш ответ…"><button class="sb" onclick="toggleAnswer(this)">Показать ответ</button><div class="ab">✓ <strong>Реальный ущерб</strong> (фактические потери, расходы на восстановление) + <strong>упущенная выгода</strong> (доходы, которые лицо могло бы получить при обычных условиях, если бы право не было нарушено) — ст. 15 ГК РФ.</div></div>
+    <div class="quiz-card"><div class="quiz-q">6. Какие сделки обязательно требуют нотариального удостоверения?</div><input class="qi" placeholder="Ваш ответ…"><button class="sb" onclick="toggleAnswer(this)">Показать ответ</button><div class="ab">✓ Завещания, ипотека, брачный договор, договор ренты, отчуждение долей в ООО, согласие супруга на крупную сделку, доверенности на совершение ряда сделок.</div></div>
+    <div class="quiz-card"><div class="quiz-q">7. Что такое принцип свободы договора (ст. 421 ГК)?</div><input class="qi" placeholder="Ваш ответ…"><button class="sb" onclick="toggleAnswer(this)">Показать ответ</button><div class="ab">✓ Стороны <strong>свободны</strong> в заключении договора, выборе контрагента, определении условий. Можно заключить договор, не предусмотренный законом. Нельзя понудить к заключению договора, кроме случаев, установленных законом.</div></div>
+  </div>
+
+  <div class="section" id="resources">
+    <div class="section-label">Источники — День 4</div>
+    <div class="res-card"><div class="res-name">📚 Гражданский кодекс РФ — полный текст</div><a class="res-link" href="https://www.consultant.ru/document/cons_doc_LAW_5142/" target="_blank">Открыть →</a></div>
+    <div class="res-card"><div class="res-name">📚 ГК РФ часть 2 — обязательства и договоры</div><a class="res-link" href="https://www.consultant.ru/document/cons_doc_LAW_9027/" target="_blank">Открыть →</a></div>
+    <div class="res-card"><div class="res-name">🏛️ Верховный Суд — практика по гражданским делам</div><a class="res-link" href="https://www.vsrf.ru/documents/practice/" target="_blank">Открыть →</a></div>
+    <div class="res-card"><div class="res-name">📖 Судебные акты — sudact.ru</div><a class="res-link" href="https://sudact.ru/" target="_blank">Открыть →</a></div>
+    <div class="res-card"><div class="res-name">📚 КонсультантПлюс</div><a class="res-link" href="https://www.consultant.ru/" target="_blank">Открыть →</a></div>
+    <div style="margin-top:18px;padding:14px;background:var(--bg3);border:1px solid #C9A84C22;border-radius:10px;font-size:14px;color:var(--text-muted);line-height:1.8">💡 <strong style="color:var(--gold-dim)">Совет:</strong> Гражданское право — самая объёмная отрасль. Сконцентрируйся сегодня на трёх китах: право собственности (ст. 209), сделки (ст. 153–165) и договоры (ст. 420–453). Остальное строится на этом фундаменте.</div>
+  </div>
+
+</div>
+<script>
+  function showTab(id,btn){document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));document.getElementById(id).classList.add('active');btn.classList.add('active');window.scrollTo({top:0,behavior:'smooth'})}
+  function toggleAnswer(btn){const box=btn.nextElementSibling;const v=box.classList.contains('visible');box.classList.toggle('visible',!v);btn.textContent=v?'Показать ответ':'Скрыть ответ'}
+  let done=false;function toggleComplete(){done=!done;const btn=document.getElementById('completeBtn');btn.classList.toggle('done',done);btn.textContent=done?'🏆 День 4 пройден!':'✓ Отметить день как пройденный'}
+</script>
+</body>
+</html>
