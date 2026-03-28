@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>День 5 — Уголовное право</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{--gold:#C9A84C;--gold-dim:#8B6914;--bg:#080604;--bg2:#0d0a0a;--bg3:#160a0a;--text:#e8dcc8;--text-dim:#a89878;--text-muted:#6a5a3a;--accent:#C94C4C;--accent-dim:#8B2A2A}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--text);font-family:'Crimson Pro',Georgia,serif;font-size:17px;line-height:1.7;min-height:100vh}
+  body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 80% 50% at 20% 0%,#2a0a0a33 0%,transparent 60%),radial-gradient(ellipse 60% 40% at 80% 100%,#1a060633 0%,transparent 60%);pointer-events:none;z-index:0}
+  .header{background:linear-gradient(180deg,#1a0808 0%,#0e0404 100%);border-bottom:1px solid #C94C4C33;padding:18px 20px 12px;position:sticky;top:0;z-index:100}
+  .header-badge{font-size:10px;letter-spacing:3px;color:#8B2A2A;text-transform:uppercase;margin-bottom:4px}
+  .header-title{font-family:'Playfair Display',serif;font-size:21px;font-weight:900;color:#C94C4C}
+  .header-sub{font-size:13px;color:var(--text-muted);margin-top:3px}
+  .progress-bar-wrap{background:#160a0a;border:1px solid #C94C4C22;border-radius:20px;height:7px;overflow:hidden;margin-top:10px}
+  .progress-bar{height:100%;background:linear-gradient(90deg,#8B2A2A,#C94C4C,#E86A6A);border-radius:20px;width:16.6%}
+  .tabs{display:flex;gap:6px;padding:12px 20px;background:var(--bg2);border-bottom:1px solid #C94C4C22;overflow-x:auto;scrollbar-width:none}
+  .tabs::-webkit-scrollbar{display:none}
+  .tab{flex-shrink:0;padding:8px 16px;border-radius:8px;border:1px solid #C94C4C22;background:transparent;color:var(--text-muted);font-family:'Crimson Pro',serif;font-size:14px;cursor:pointer;transition:all 0.2s;white-space:nowrap}
+  .tab.active{background:linear-gradient(135deg,#C94C4C33,#C94C4C11);border-color:#C94C4C77;color:#C94C4C}
+  .content{padding:20px;position:relative;z-index:1;max-width:700px;margin:0 auto}
+  .section{display:none;animation:fadeIn 0.4s ease}
+  .section.active{display:block}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+  .section-label{font-size:10px;letter-spacing:3px;color:#8B2A2A;text-transform:uppercase;margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid #C94C4C22}
+  .card{background:var(--bg3);border:1px solid #C94C4C22;border-left:3px solid #C94C4C;border-radius:12px;padding:18px;margin-bottom:16px}
+  .card h3{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:#C94C4C;margin-bottom:12px}
+  .card p,.card ul,.card ol{color:var(--text-dim);font-size:16px;line-height:1.85}
+  .card ul,.card ol{padding-left:20px}
+  .card li{margin-bottom:5px}
+  .hl{background:#C94C4C11;border:1px solid #C94C4C33;border-radius:8px;padding:12px 14px;margin:12px 0;font-size:15px;color:#8B2A2A}
+  .row{background:#0e0808;border:1px solid #C94C4C1a;border-radius:8px;padding:10px 14px;display:flex;gap:12px;align-items:flex-start;margin-bottom:6px}
+  .rlabel{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#C94C4C;font-weight:700;flex-shrink:0;min-width:80px;padding-top:2px}
+  .rtext{font-size:15px;color:var(--text-dim);line-height:1.7}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+  .box{background:#0e0808;border:1px solid #C94C4C22;border-radius:8px;padding:12px 14px}
+  .box-title{font-size:13px;font-weight:700;color:#C94C4C;margin-bottom:8px}
+  .box-body{font-size:14px;color:var(--text-dim);line-height:1.8}
+  .ex{background:#0a0606;border:1px solid #C94C4C33;border-radius:10px;padding:14px 16px;margin:10px 0}
+  .ex-label{font-size:11px;letter-spacing:2px;color:#C94C4C;text-transform:uppercase;margin-bottom:6px;font-weight:700}
+  .ex-text{font-size:15px;color:var(--text-dim);line-height:1.8}
+  .corpus{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+  .corpus-item{background:#0e0808;border:1px solid #C94C4C33;border-radius:10px;padding:14px;text-align:center}
+  .corpus-icon{font-size:24px;margin-bottom:6px}
+  .corpus-name{font-size:13px;font-weight:700;color:#C94C4C;margin-bottom:4px}
+  .corpus-desc{font-size:13px;color:var(--text-dim);line-height:1.6}
+  .task-card{background:var(--bg3);border:1px solid #C94C4C22;border-radius:12px;padding:16px 18px;margin-bottom:12px;display:flex;gap:14px}
+  .task-num{width:32px;height:32px;border-radius:50%;flex-shrink:0;background:#C94C4C22;border:1px solid #C94C4C55;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:bold;color:#C94C4C}
+  .task-text{font-size:16px;color:var(--text-dim);line-height:1.75}
+  .term-card{background:var(--bg3);border:1px solid #C94C4C22;border-radius:10px;padding:14px 16px;margin-bottom:10px}
+  .term-name{font-family:'Playfair Display',serif;font-size:16px;color:#C94C4C;margin-bottom:6px}
+  .term-def{font-size:15px;color:var(--text-dim);line-height:1.7}
+  .quiz-card{background:var(--bg3);border:1px solid #C94C4C22;border-radius:12px;padding:18px;margin-bottom:14px}
+  .quiz-q{font-size:16px;font-weight:600;color:var(--text);margin-bottom:12px;line-height:1.5}
+  .qi{width:100%;background:#0e0808;border:1px solid #C94C4C33;color:var(--text);padding:10px 14px;border-radius:8px;font-family:'Crimson Pro',serif;font-size:15px;outline:none}
+  .qi:focus{border-color:#C94C4C}
+  .sb{margin-top:10px;background:none;border:1px solid #C94C4C33;color:#8B2A2A;border-radius:6px;padding:6px 14px;font-family:'Crimson Pro',serif;font-size:13px;cursor:pointer}
+  .ab{display:none;margin-top:10px;background:#C94C4C0d;border:1px solid #C94C4C33;border-radius:8px;padding:12px 14px;font-size:15px;color:#8B2A2A;line-height:1.7}
+  .ab.visible{display:block;animation:fadeIn 0.3s ease}
+  .res-card{background:var(--bg3);border:1px solid #C94C4C22;border-radius:10px;padding:14px 16px;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .res-name{font-size:15px;color:var(--text-dim)}
+  .res-link{color:#C94C4C;font-size:12px;text-decoration:none;border:1px solid #C94C4C44;border-radius:5px;padding:4px 12px;flex-shrink:0}
+  .complete-wrap{text-align:center;padding:24px 0 8px}
+  .complete-btn{background:linear-gradient(135deg,#C94C4C33,#C94C4C11);border:1px solid #C94C4C66;color:#C94C4C;border-radius:10px;padding:12px 32px;font-family:'Playfair Display',serif;font-size:16px;cursor:pointer;transition:all 0.3s}
+  .complete-btn.done{background:linear-gradient(135deg,#C94C4C66,#C94C4C33)}
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="header-badge">⚖️ Академия Российского Права · 30 дней</div>
+  <div class="header-title">🔒 День 5 — Уголовное право</div>
+  <div class="header-sub">Преступление · Состав · Наказание · УК РФ</div>
+  <div class="progress-bar-wrap"><div class="progress-bar"></div></div>
+</div>
+<div class="tabs">
+  <button class="tab active" onclick="showTab('theory',this)">📖 Теория</button>
+  <button class="tab" onclick="showTab('practice',this)">✏️ Практика</button>
+  <button class="tab" onclick="showTab('terms',this)">📌 Термины</button>
+  <button class="tab" onclick="showTab('quiz',this)">🧪 Тест</button>
+  <button class="tab" onclick="showTab('resources',this)">🔗 Источники</button>
+</div>
+<div class="content">
+
+  <div class="section active" id="theory">
+    <div class="section-label">Теоретический материал — День 5</div>
+
+    <div class="card">
+      <h3>1. Уголовное право — задачи и принципы</h3>
+      <p><strong style="color:#C94C4C">Уголовное право</strong> — отрасль публичного права, определяющая, какие общественно опасные деяния являются преступлениями, и устанавливающая наказания за их совершение.</p>
+      <div class="hl">📚 Основной источник — <strong>Уголовный кодекс РФ (УК РФ)</strong>, принят 13 июня 1996 года, вступил в силу 1 января 1997 года. Состоит из Общей и Особенной частей.</div>
+      <p>Принципы уголовного права (ст. 3–7 УК РФ):</p>
+      <ul>
+        <li><strong>Законность</strong> — нет преступления без указания на него в законе (nullum crimen sine lege)</li>
+        <li><strong>Равенство</strong> — все равны перед уголовным законом</li>
+        <li><strong>Вина</strong> — ответственность только за виновное деяние</li>
+        <li><strong>Справедливость</strong> — наказание соразмерно деянию</li>
+        <li><strong>Гуманизм</strong> — наказание не может унижать достоинство человека</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>2. Преступление — понятие и признаки</h3>
+      <p><strong style="color:#C94C4C">Преступление</strong> — виновно совершённое <strong>общественно опасное</strong> деяние, запрещённое УК РФ под угрозой наказания (ст. 14 УК РФ).</p>
+      <p style="margin-top:10px">Обязательные признаки преступления:</p>
+      <div style="margin-top:8px">
+        <div class="row"><span class="rlabel">Общественная опасность</span><span class="rtext">Деяние причиняет вред или создаёт угрозу вреда охраняемым интересам (личность, общество, государство)</span></div>
+        <div class="row"><span class="rlabel">Противоправность</span><span class="rtext">Деяние прямо предусмотрено нормой УК РФ. Нет нормы — нет преступления</span></div>
+        <div class="row"><span class="rlabel">Виновность</span><span class="rtext">Умысел (прямой или косвенный) или неосторожность (легкомыслие или небрежность)</span></div>
+        <div class="row"><span class="rlabel">Наказуемость</span><span class="rtext">За деяние предусмотрено уголовное наказание в санкции статьи УК</span></div>
+      </div>
+      <div class="hl">⚠️ Малозначительное деяние — формально содержит признаки преступления, но не представляет общественной опасности → не является преступлением (ч. 2 ст. 14 УК).</div>
+    </div>
+
+    <div class="card">
+      <h3>3. Состав преступления — 4 элемента</h3>
+      <p>Состав преступления — совокупность <strong style="color:#C94C4C">четырёх обязательных элементов</strong>, при отсутствии хотя бы одного нет основания для уголовной ответственности:</p>
+      <div class="corpus">
+        <div class="corpus-item"><div class="corpus-icon">🎯</div><div class="corpus-name">ОБЪЕКТ</div><div class="corpus-desc">Что охраняет закон: жизнь, здоровье, собственность, госвласть, общественный порядок</div></div>
+        <div class="corpus-item"><div class="corpus-icon">💥</div><div class="corpus-name">ОБЪЕКТИВНАЯ СТОРОНА</div><div class="corpus-desc">Внешнее проявление: деяние (действие/бездействие), последствия, причинная связь, способ, время, место</div></div>
+        <div class="corpus-item"><div class="corpus-icon">👤</div><div class="corpus-name">СУБЪЕКТ</div><div class="corpus-desc">Лицо, совершившее преступление. Физическое, вменяемое, достигшее возраста ответственности (16 лет; по ряду статей — 14)</div></div>
+        <div class="corpus-item"><div class="corpus-icon">🧠</div><div class="corpus-name">СУБЪЕКТИВНАЯ СТОРОНА</div><div class="corpus-desc">Психическое отношение к деянию: умысел (прямой/косвенный) или неосторожность (легкомыслие/небрежность). Мотив, цель.</div></div>
+      </div>
+      <div class="hl" style="margin-top:12px">💡 Запомни аббревиатуру: <strong>ООСС</strong> — Объект, Объективная сторона, Субъект, Субъективная сторона.</div>
+    </div>
+
+    <div class="card">
+      <h3>4. Формы вины</h3>
+      <div class="two">
+        <div class="box">
+          <div class="box-title">🎯 Умысел (ст. 25 УК)</div>
+          <div class="box-body"><strong>Прямой:</strong> лицо осознаёт опасность, предвидит последствия и желает их наступления.<br><br><strong>Косвенный:</strong> предвидит последствия, не желает их, но сознательно допускает.</div>
+        </div>
+        <div class="box">
+          <div class="box-title">⚠️ Неосторожность (ст. 26 УК)</div>
+          <div class="box-body"><strong>Легкомыслие:</strong> предвидит возможность последствий, но самонадеянно рассчитывает их предотвратить.<br><br><strong>Небрежность:</strong> не предвидит последствий, хотя должен и мог.</div>
+        </div>
+      </div>
+      <div class="ex"><div class="ex-label">Пример — как работает вина</div><div class="ex-text"><strong style="color:var(--text)">ДТП:</strong> водитель намеренно сбил пешехода → <em>прямой умысел</em> (убийство, ст. 105).<br>Превысил скорость, не справился с управлением → <em>небрежность</em> (ст. 264 — нарушение ПДД, повлёкшее смерть).</div></div>
+    </div>
+
+    <div class="card">
+      <h3>5. Категории преступлений (ст. 15 УК РФ)</h3>
+      <div class="row"><span class="rlabel" style="min-width:100px">Небольшой тяжести</span><span class="rtext">Умысел или неосторожность, макс. наказание — до <strong>3 лет</strong> лишения свободы. Срок давности — 2 года</span></div>
+      <div class="row"><span class="rlabel" style="min-width:100px">Средней тяжести</span><span class="rtext">Умысел до <strong>5 лет</strong>, неосторожность свыше 3 лет. Срок давности — 6 лет</span></div>
+      <div class="row"><span class="rlabel" style="min-width:100px">Тяжкие</span><span class="rtext">Умысел до <strong>10 лет</strong>. Срок давности — 10 лет</span></div>
+      <div class="row"><span class="rlabel" style="min-width:100px">Особо тяжкие</span><span class="rtext">Умысел свыше <strong>10 лет</strong> или пожизненное лишение свободы. Срок давности — 15 лет</span></div>
+      <div class="hl">📌 Категория преступления влияет на: срок давности, условия освобождения, вид исправительного учреждения, судимость, рецидив.</div>
+    </div>
+
+    <div class="card">
+      <h3>6. Виды наказаний (ст. 44 УК РФ)</h3>
+      <p>УК РФ предусматривает <strong style="color:#C94C4C">13 видов наказаний</strong> — от мягкого к строгому:</p>
+      <ul>
+        <li>Штраф</li>
+        <li>Лишение права занимать должность или заниматься деятельностью</li>
+        <li>Лишение специального, воинского или почётного звания</li>
+        <li>Обязательные работы (60–480 часов)</li>
+        <li>Исправительные работы (2 месяца — 2 года)</li>
+        <li>Принудительные работы</li>
+        <li>Ограничение свободы</li>
+        <li>Арест (1–6 месяцев)</li>
+        <li>Содержание в дисциплинарной воинской части</li>
+        <li><strong>Лишение свободы на определённый срок</strong></li>
+        <li><strong>Пожизненное лишение свободы</strong></li>
+        <li>Смертная казнь (мораторий с 1996 года)</li>
+      </ul>
+      <div class="hl">⚠️ <strong>Смертная казнь</strong> в России не применяется с 1996 года — действует мораторий. Высшая фактическая мера — пожизненное лишение свободы.</div>
+    </div>
+
+    <div class="card">
+      <h3>7. Обстоятельства, исключающие преступность</h3>
+      <div class="row"><span class="rlabel">Необходимая оборона (ст. 37)</span><span class="rtext">Защита от общественно опасного посягательства. Не должна явно превышать пределы — иначе превышение пределов НО (ч. 1 ст. 108 УК)</span></div>
+      <div class="row"><span class="rlabel">Крайняя необходимость (ст. 39)</span><span class="rtext">Устранение опасности путём причинения меньшего вреда. Вред причинённый должен быть меньше предотвращённого</span></div>
+      <div class="row"><span class="rlabel">Задержание (ст. 38)</span><span class="rtext">Причинение вреда лицу, совершившему преступление, при его задержании для доставки в органы власти</span></div>
+      <div class="row"><span class="rlabel">Исполнение приказа (ст. 42)</span><span class="rtext">Исполнение обязательного приказа. Но заведомо незаконный приказ исполнять нельзя — ответственность наступает</span></div>
+    </div>
+
+    <div class="complete-wrap"><button class="complete-btn" id="completeBtn" onclick="toggleComplete()">✓ Отметить день как пройденный</button></div>
+  </div>
+
+  <div class="section" id="practice">
+    <div class="section-label">Практические задания — День 5</div>
+    <div class="task-card"><div class="task-num">1</div><div class="task-text">Для каждой ситуации найди состав преступления (объект, объективная сторона, субъект, субъективная сторона):<br><br><em style="color:#C94C4C88">а) 17-летний взломал банкомат и похитил деньги<br>б) Врач по халатности ввёл пациенту неверное лекарство, пациент погиб<br>в) Мужчина ударил соседа в драке, причинив тяжкий вред здоровью</em></div></div>
+    <div class="task-card"><div class="task-num">2</div><div class="task-text">Определи форму вины в каждом случае:<br><br><em style="color:#C94C4C88">а) Снайпер прицельно выстрелил в жертву<br>б) Водитель знал, что тормоза плохие, но поехал — сбил пешехода<br>в) Строитель не убрал инструмент с лесов, инструмент упал и травмировал прохожего<br>г) Хулиган бросил бутылку в толпу, «не желая никому навредить»</em></div></div>
+    <div class="task-card"><div class="task-num">3</div><div class="task-text">Открой УК РФ и найди статьи: <strong>105 (убийство), 158 (кража), 161 (грабёж), 162 (разбой), 228 (наркотики)</strong>. Для каждой укажи:<br>— максимальное наказание<br>— категорию преступления<br>— срок давности</div></div>
+    <div class="task-card"><div class="task-num">4</div><div class="task-text">Ситуация: <em style="color:#C94C4C88">Женщина возвращалась ночью домой. На неё напал грабитель с ножом. Она выхватила газовый баллончик и брызнула в лицо нападавшего. Он упал и получил ожог глаз.</em><br><br>Является ли её действие преступлением? На какую статью УК ты опираешься?</div></div>
+    <div class="task-card"><div class="task-num">5</div><div class="task-text">Выучи наизусть структуру состава преступления (<strong>ООСС</strong>) и 4 категории преступлений с максимальными сроками. Это основа уголовного права, которую знает каждый следователь и прокурор.</div></div>
+  </div>
+
+  <div class="section" id="terms">
+    <div class="section-label">Ключевые термины — День 5</div>
+    <div class="term-card"><div class="term-name">🔒 Преступление</div><div class="term-def">Виновно совершённое общественно опасное деяние, запрещённое УК РФ под угрозой наказания (ст. 14 УК РФ). Признаки: общественная опасность, противоправность, виновность, наказуемость.</div></div>
+    <div class="term-card"><div class="term-name">⚖️ Состав преступления</div><div class="term-def">Совокупность объективных и субъективных элементов: объект, объективная сторона, субъект, субъективная сторона. Единственное основание уголовной ответственности (ст. 8 УК).</div></div>
+    <div class="term-card"><div class="term-name">🎯 Объект преступления</div><div class="term-def">Охраняемые уголовным законом общественные отношения, которым преступление причиняет вред: жизнь, здоровье, собственность, государственная власть и т.д.</div></div>
+    <div class="term-card"><div class="term-name">🧠 Умысел прямой</div><div class="term-def">Лицо осознаёт общественную опасность своего деяния, предвидит неизбежность или возможность последствий и желает их наступления (ч. 2 ст. 25 УК).</div></div>
+    <div class="term-card"><div class="term-name">⚠️ Небрежность</div><div class="term-def">Лицо не предвидит возможности наступления общественно опасных последствий, хотя при необходимой внимательности должно было и могло их предвидеть (ч. 3 ст. 26 УК).</div></div>
+    <div class="term-card"><div class="term-name">🛡️ Необходимая оборона</div><div class="term-def">Причинение вреда посягающему лицу при защите личности, прав и законных интересов от общественно опасного посягательства. Не является преступлением при соблюдении пределов (ст. 37 УК).</div></div>
+    <div class="term-card"><div class="term-name">⏱️ Срок давности</div><div class="term-def">Период после совершения преступления, по истечении которого лицо освобождается от уголовной ответственности: 2/6/10/15 лет в зависимости от категории преступления.</div></div>
+    <div class="term-card"><div class="term-name">🚫 Малозначительное деяние</div><div class="term-def">Действие, формально содержащее признаки преступления, но в силу малозначительности не представляющее общественной опасности. Не является преступлением (ч. 2 ст. 14 УК).</div></div>
+  </div>
+
+  <div class="section" id="quiz">
+    <div class="section-label">Проверка знаний — 7 вопросов</div>
+    <div class="quiz-card"><div class="quiz-q">1. Назовите 4 обязательных признака преступления.</div><input class="qi" placeholder="Ваш ответ…"><button class="sb" onclick="toggleAnswer(this)">Показать ответ</button><div class="ab">✓ <strong>Общественная опасность</strong> (причиняет вред), <strong>противоправность</strong> (предусмотрено УК), <strong>виновность</strong> (умысел или неосторожность), <strong>наказуемость</strong> (предусмотрено наказание в санкции).</div></div>
+    <div class="quiz-card"><div class="quiz-q">2. Назовите 4 элемента состава преступления.</div><input class="qi" placeholder="Ваш ответ…"><button class="sb" onclick="toggleAnswer(this)">Показать ответ</button><div class="ab">✓ <strong>Объект</strong> (что охраняется), <strong>объективная сторона</strong> (внешнее проявление), <strong>субъект</strong> (кто совершил), <strong>субъективная сторона</strong> (вина — умысел или неосторожность). Аббревиатура: ООСС.</div></div>
+    <div class="quiz-card"><div class="quiz-q">3. С какого возраста наступает уголовная ответственность в РФ? Есть ли исключения?</div><input class="qi" placeholder="Ваш ответ…"><button class="sb" onclick="toggleAnswer(this)">Показать ответ</button><div class="ab">✓ Общий возраст — <strong>16 лет</strong>. С <strong>14 лет</strong> — за особо тяжкие преступления: убийство (ст. 105), умышленное причинение тяжкого вреда (ст. 111), кража (ст. 158), грабёж (ст. 161), разбой (ст. 162), изнасилование и др. (ст. 20 УК).</div></div>
+    <div class="quiz-card"><div class="quiz-q">4. Чем прямой умысел отличается от косвенного?</div><input class="qi" placeholder="Ваш ответ…"><button class="sb" onclick="toggleAnswer(this)">Показать ответ</button><div class="ab">✓ При <strong>прямом умысле</strong> лицо желает наступления последствий. При <strong>косвенном</strong> — не желает, но сознательно допускает или безразлично относится к ним.</div></div>
+    <div class="quiz-card"><div class="quiz-q">5. Какой максимальный срок лишения свободы за особо тяжкое преступление?</div><input class="qi" placeholder="Ваш ответ…"><button class="sb" onclick="toggleAnswer(this)">Показать ответ</button><div class="ab">✓ Срок лишения свободы — до <strong>20 лет</strong> за одно преступление, по совокупности — до 30 лет. Также предусмотрено <strong>пожизненное лишение свободы</strong>. Смертная казнь действует, но не применяется с 1996 года.</div></div>
+    <div class="quiz-card"><div class="quiz-q">6. Что такое необходимая оборона и каков её предел?</div><input class="qi" placeholder="Ваш ответ…"><button class="sb" onclick="toggleAnswer(this)">Показать ответ</button><div class="ab">✓ Необходимая оборона — причинение вреда нападающему при защите от общественно опасного посягательства. Не является преступлением. Превышение пределов — явное несоответствие защиты характеру и степени опасности нападения → ответственность по ч. 1 ст. 108 УК.</div></div>
+    <div class="quiz-card"><div class="quiz-q">7. Каков срок давности за преступление небольшой тяжести?</div><input class="qi" placeholder="Ваш ответ…"><button class="sb" onclick="toggleAnswer(this)">Показать ответ</button><div class="ab">✓ <strong>2 года</strong> (ст. 78 УК). По истечении этого срока со дня совершения преступления лицо освобождается от уголовной ответственности.</div></div>
+  </div>
+
+  <div class="section" id="resources">
+    <div class="section-label">Источники — День 5</div>
+    <div class="res-card"><div class="res-name">📚 Уголовный кодекс РФ — полный текст</div><a class="res-link" href="https://www.consultant.ru/document/cons_doc_LAW_10699/" target="_blank">Открыть →</a></div>
+    <div class="res-card"><div class="res-name">🔍 Следственный комитет РФ</div><a class="res-link" href="https://sledcom.ru/" target="_blank">Открыть →</a></div>
+    <div class="res-card"><div class="res-name">⚡ Генеральная Прокуратура РФ</div><a class="res-link" href="https://genproc.gov.ru/" target="_blank">Открыть →</a></div>
+    <div class="res-card"><div class="res-name">🏛️ Верховный Суд РФ — уголовная практика</div><a class="res-link" href="https://www.vsrf.ru/documents/practice/" target="_blank">Открыть →</a></div>
+    <div class="res-card"><div class="res-name">📖 Судебные акты — sudact.ru</div><a class="res-link" href="https://sudact.ru/" target="_blank">Открыть →</a></div>
+    <div style="margin-top:18px;padding:14px;background:var(--bg3);border:1px solid #C94C4C22;border-radius:10px;font-size:14px;color:var(--text-muted);line-height:1.8">💡 <strong style="color:#8B2A2A">Совет:</strong> Состав преступления (ООСС) — главный инструмент следователя и прокурора. При анализе любого дела всегда задавай 4 вопроса: что нарушено? что было сделано? кто это сделал? хотел ли этого? Без полного состава уголовного дела нет.</div>
+  </div>
+
+</div>
+<script>
+  function showTab(id,btn){document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));document.getElementById(id).classList.add('active');btn.classList.add('active');window.scrollTo({top:0,behavior:'smooth'})}
+  function toggleAnswer(btn){const box=btn.nextElementSibling;const v=box.classList.contains('visible');box.classList.toggle('visible',!v);btn.textContent=v?'Показать ответ':'Скрыть ответ'}
+  let done=false;function toggleComplete(){done=!done;const btn=document.getElementById('completeBtn');btn.classList.toggle('done',done);btn.textContent=done?'🏆 День 5 пройден!':'✓ Отметить день как пройденный'}
+</script>
+</body>
+</html>
