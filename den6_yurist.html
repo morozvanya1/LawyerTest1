@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>День 6 — Административное право</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{--gold:#4A9BBB;--gold-dim:#2D6B8B;--bg:#04080c;--bg2:#060c12;--bg3:#081018;--text:#c8dce8;--text-dim:#788fa0;--text-muted:#3a5060}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--text);font-family:'Crimson Pro',Georgia,serif;font-size:17px;line-height:1.7;min-height:100vh}
+  body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 80% 50% at 20% 0%,#0a1e2a33 0%,transparent 60%),radial-gradient(ellipse 60% 40% at 80% 100%,#021a2a33 0%,transparent 60%);pointer-events:none;z-index:0}
+  .header{background:linear-gradient(180deg,#081018 0%,#040c12 100%);border-bottom:1px solid #4A9BBB33;padding:18px 20px 12px;position:sticky;top:0;z-index:100}
+  .header-badge{font-size:10px;letter-spacing:3px;color:var(--gold-dim);text-transform:uppercase;margin-bottom:4px}
+  .header-title{font-family:'Playfair Display',serif;font-size:21px;font-weight:900;color:var(--gold)}
+  .header-sub{font-size:13px;color:var(--text-muted);margin-top:3px}
+  .progress-bar-wrap{background:#081018;border:1px solid #4A9BBB22;border-radius:20px;height:7px;overflow:hidden;margin-top:10px}
+  .progress-bar{height:100%;background:linear-gradient(90deg,#2D6B8B,#4A9BBB,#6AB5D5);border-radius:20px;width:20%}
+  .tabs{display:flex;gap:6px;padding:12px 20px;background:var(--bg2);border-bottom:1px solid #4A9BBB22;overflow-x:auto;scrollbar-width:none}
+  .tabs::-webkit-scrollbar{display:none}
+  .tab{flex-shrink:0;padding:8px 16px;border-radius:8px;border:1px solid #4A9BBB22;background:transparent;color:var(--text-muted);font-family:'Crimson Pro',serif;font-size:14px;cursor:pointer;transition:all 0.2s;white-space:nowrap}
+  .tab.active{background:linear-gradient(135deg,#4A9BBB33,#4A9BBB11);border-color:#4A9BBB77;color:var(--gold)}
+  .content{padding:20px;position:relative;z-index:1;max-width:700px;margin:0 auto}
+  .section{display:none;animation:fadeIn 0.4s ease}
+  .section.active{display:block}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+  .section-label{font-size:10px;letter-spacing:3px;color:var(--gold-dim);text-transform:uppercase;margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid #4A9BBB22}
+  .card{background:var(--bg3);border:1px solid #4A9BBB22;border-left:3px solid var(--gold);border-radius:12px;padding:18px;margin-bottom:16px}
+  .card h3{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:var(--gold);margin-bottom:12px}
+  .card p,.card ul,.card ol{color:var(--text-dim);font-size:16px;line-height:1.85}
+  .card ul,.card ol{padding-left:20px}
+  .card li{margin-bottom:5px}
+  .hl{background:#4A9BBB11;border:1px solid #4A9BBB33;border-radius:8px;padding:12px 14px;margin:12px 0;font-size:15px;color:var(--gold-dim)}
+  .row{background:#060c12;border:1px solid #4A9BBB1a;border-radius:8px;padding:10px 14px;display:flex;gap:12px;align-items:flex-start;margin-bottom:6px}
+  .rlabel{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--gold);font-weight:700;flex-shrink:0;min-width:90px;padding-top:2px}
+  .rtext{font-size:15px;color:var(--text-dim);line-height:1.7}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+  .box{background:#060c12;border:1px solid #4A9BBB22;border-radius:8px;padding:12px 14px}
+  .box-title{font-size:13px;font-weight:700;color:var(--gold);margin-bottom:8px}
+  .box-body{font-size:14px;color:var(--text-dim);line-height:1.8}
+  .ex{background:#040a10;border:1px solid #4A9BBB33;border-radius:10px;padding:14px 16px;margin:10px 0}
+  .ex-label{font-size:11px;letter-spacing:2px;color:var(--gold);text-transform:uppercase;margin-bottom:6px;font-weight:700}
+  .ex-text{font-size:15px;color:var(--text-dim);line-height:1.8}
+  .task-card{background:var(--bg3);border:1px solid #4A9BBB22;border-radius:12px;padding:16px 18px;margin-bottom:12px;display:flex;gap:14px}
+  .task-num{width:32px;height:32px;border-radius:50%;flex-shrink:0;background:#4A9BBB22;border:1px solid #4A9BBB55;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:bold;color:var(--gold)}
+  .task-text{font-size:16px;color:var(--text-dim);line-height:1.75}
+  .term-card{background:var(--bg3);border:1px solid #4A9BBB22;border-radius:10px;padding:14px 16px;margin-bottom:10px}
+  .term-name{font-family:'Playfair Display',serif;font-size:16px;color:var(--gold);margin-bottom:6px}
+  .term-def{font-size:15px;color:var(--text-dim);line-height:1.7}
+  .quiz-card{background:var(--bg3);border:1px solid #4A9BBB22;border-radius:12px;padding:18px;margin-bottom:14px}
+  .quiz-q{font-size:16px;font-weight:600;color:var(--text);margin-bottom:12px;line-height:1.5}
+  .qi{width:100%;background:#060c12;border:1px solid #4A9BBB33;color:var(--text);padding:10px 14px;border-radius:8px;font-family:'Crimson Pro',serif;font-size:15px;outline:none}
+  .qi:focus{border-color:var(--gold)}
+  .sb{margin-top:10px;background:none;border:1px solid #4A9BBB33;color:var(--gold-dim);border-radius:6px;padding:6px 14px;font-family:'Crimson Pro',serif;font-size:13px;cursor:pointer}
+  .ab{display:none;margin-top:10px;background:#4A9BBB0d;border:1px solid #4A9BBB33;border-radius:8px;padding:12px 14px;font-size:15px;color:var(--gold-dim);line-height:1.7}
+  .ab.visible{display:block;animation:fadeIn 0.3s ease}
+  .res-card{background:var(--bg3);border:1px solid #4A9BBB22;border-radius:10px;padding:14px 16px;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .res-name{font-size:15px;color:var(--text-dim)}
+  .res-link{color:var(--gold);font-size:12px;text-decoration:none;border:1px solid #4A9BBB44;border-radius:5px;padding:4px 12px;flex-shrink:0}
+  .complete-wrap{text-align:center;padding:24px 0 8px}
+  .complete-btn{background:linear-gradient(135deg,#4A9BBB33,#4A9BBB11);border:1px solid #4A9BBB66;color:var(--gold);border-radius:10px;padding:12px 32px;font-family:'Playfair Display',serif;font-size:16px;cursor:pointer;transition:all 0.3s}
+  .complete-btn.done{background:linear-gradient(135deg,#4A9BBB66,#4A9BBB33)}
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="header-badge">⚖️ Академия Российского Права · 30 дней</div>
+  <div class="header-title">🏛️ День 6 — Административное право</div>
+  <div class="header-sub">Госуправление · КоАП РФ · Правонарушение · Ответственность</div>
+  <div class="progress-bar-wrap"><div class="progress-bar"></div></div>
+</div>
+<div class="tabs">
+  <button class="tab active" onclick="showTab('theory',this)">📖 Теория</button>
+  <button class="tab" onclick="showTab('practice',this)">✏️ Практика</button>
+  <button class="tab" onclick="showTab('terms',this)">📌 Термины</button>
+  <button class="tab" onclick="showTab('quiz',this)">🧪 Тест</button>
+  <button class="tab" onclick="showTab('resources',this)">🔗 Источники</button>
+</div>
+<div class="content">
+
+  <div class="section active" id="theory">
+    <div class="section-label">Теоретический материал — День 6</div>
+
+    <div class="card">
+      <h3>1. Административное право — предмет и место в системе</h3>
+      <p><strong style="color:var(--gold)">Административное право</strong> — отрасль публичного права, регулирующая отношения в сфере государственного управления: организацию и деятельность органов исполнительной власти, порядок взаимодействия государства и граждан.</p>
+      <div class="hl">📚 Главные источники:<br>• <strong>КоАП РФ</strong> (Кодекс об административных правонарушениях, 2001) — ответственность<br>• <strong>КАС РФ</strong> (Кодекс административного судопроизводства, 2015) — судебная защита<br>• Федеральные законы об органах исполнительной власти</div>
+      <p>Особенности административного права:</p>
+      <ul>
+        <li>Метод — <strong>императивный</strong>: властные предписания со стороны государства</li>
+        <li>Обязательный субъект — <strong>орган исполнительной власти</strong> или должностное лицо</li>
+        <li>Неравенство сторон: государство — над гражданином</li>
+        <li>Внесудебный порядок применения санкций (штраф, предупреждение)</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>2. Административное правонарушение</h3>
+      <p><strong style="color:var(--gold)">Административное правонарушение</strong> — противоправное, виновное действие (бездействие) физического или юридического лица, за которое КоАП или законами субъектов РФ предусмотрена административная ответственность (ст. 2.1 КоАП).</p>
+      <p style="margin-top:10px">Признаки — те же 4, что у преступления, но <strong>меньшая степень общественной опасности</strong>:</p>
+      <div style="margin-top:8px">
+        <div class="row"><span class="rlabel">Противоправность</span><span class="rtext">Нарушение нормы КоАП или закона субъекта РФ</span></div>
+        <div class="row"><span class="rlabel">Виновность</span><span class="rtext">Умысел или неосторожность (как в уголовном праве)</span></div>
+        <div class="row"><span class="rlabel">Наказуемость</span><span class="rtext">За деяние предусмотрено административное наказание</span></div>
+        <div class="row"><span class="rlabel">Субъект</span><span class="rtext">Физическое лицо (с 16 лет), должностное лицо, юридическое лицо</span></div>
+      </div>
+      <div class="hl">🔑 <strong>Ключевое отличие от преступления:</strong> меньшая общественная опасность и мягче санкции. Кража на 5 000 руб. — административное правонарушение (ст. 7.27 КоАП). Кража на 5 001 руб. — уже преступление (ст. 158 УК).</div>
+    </div>
+
+    <div class="card">
+      <h3>3. Виды административных наказаний (ст. 3.2 КоАП)</h3>
+      <div class="row"><span class="rlabel">Предупреждение</span><span class="rtext">Официальное порицание — письменная форма. Самое мягкое наказание</span></div>
+      <div class="row"><span class="rlabel">Штраф</span><span class="rtext">Денежное взыскание — от 100 руб. до нескольких миллионов (для юрлиц). Самое распространённое наказание</span></div>
+      <div class="row"><span class="rlabel">Конфискация</span><span class="rtext">Принудительное изъятие орудия или предмета правонарушения в пользу государства</span></div>
+      <div class="row"><span class="rlabel">Лишение права</span><span class="rtext">Лишение специального права — водительских прав, права на охоту (1 месяц — 3 года)</span></div>
+      <div class="row"><span class="rlabel">Арест</span><span class="rtext">Содержание под стражей до <strong>30 суток</strong> (в особых случаях — до 60). Назначает только суд</span></div>
+      <div class="row"><span class="rlabel">Дисквалификация</span><span class="rtext">Лишение права занимать руководящие должности (6 месяцев — 3 года)</span></div>
+      <div class="row"><span class="rlabel">Обязательные работы</span><span class="rtext">До 200 часов — бесплатный труд в свободное от работы время</span></div>
+      <div class="row"><span class="rlabel">Выдворение</span><span class="rtext">Принудительное выдворение за пределы РФ — только для иностранцев</span></div>
+    </div>
+
+    <div class="card">
+      <h3>4. Производство по делам об административных правонарушениях</h3>
+      <p>Стадии производства по делу об АПН:</p>
+      <div class="row"><span class="rlabel">1. Возбуждение</span><span class="rtext">Протокол об административном правонарушении — составляет уполномоченное должностное лицо (полиция, инспекторы, прокурор)</span></div>
+      <div class="row"><span class="rlabel">2. Рассмотрение</span><span class="rtext">Судья, орган, должностное лицо рассматривают дело. Срок — <strong>15 дней</strong> (суд — 2 месяца)</span></div>
+      <div class="row"><span class="rlabel">3. Постановление</span><span class="rtext">Выносится постановление о назначении наказания или о прекращении дела</span></div>
+      <div class="row"><span class="rlabel">4. Обжалование</span><span class="rtext">В течение <strong>10 дней</strong> с момента получения постановления — в вышестоящий орган или суд</span></div>
+      <div class="row"><span class="rlabel">5. Исполнение</span><span class="rtext">Штраф — в течение <strong>60 дней</strong>. Неоплата — удвоение штрафа или арест до 15 суток</span></div>
+      <div class="hl">⚠️ Срок давности привлечения к административной ответственности — <strong>2 месяца</strong> (в суде — 3 месяца). После истечения — дело прекращается.</div>
+    </div>
+
+    <div class="card">
+      <h3>5. Система органов исполнительной власти</h3>
+      <p>Административное право регулирует деятельность органов власти, с которыми юрист сталкивается постоянно:</p>
+      <div class="two">
+        <div class="box"><div class="box-title">🏛️ Федеральный уровень</div><div class="box-body">• Президент РФ<br>• Правительство РФ<br>• Федеральные министерства (МВД, ФНС, ФСБ, МЧС и др.)<br>• Федеральные службы и агентства</div></div>
+        <div class="box"><div class="box-title">🏙️ Региональный уровень</div><div class="box-body">• Главы субъектов РФ<br>• Правительства регионов<br>• Органы исполнительной власти субъектов<br>• Муниципальные администрации</div></div>
+      </div>
+      <div class="ex" style="margin-top:12px"><div class="ex-label">Пример — кто вас контролирует</div><div class="ex-text"><strong style="color:var(--text)">МВД</strong> — охрана порядка, расследование, паспорта, ГИБДД.<br><strong style="color:var(--text)">ФНС</strong> — налоги, регистрация ИП и юрлиц.<br><strong style="color:var(--text)">Роспотребнадзор</strong> — защита прав потребителей, санитарные нормы.<br><strong style="color:var(--text)">Прокуратура</strong> — надзор за законностью действий всех органов.</div></div>
+    </div>
+
+    <div class="card">
+      <h3>6. Обжалование действий государственных органов</h3>
+      <p>Гражданин вправе обжаловать незаконные действия органов власти двумя путями:</p>
+      <div class="row"><span class="rlabel">Досудебный (административный)</span><span class="rtext">Жалоба в вышестоящий орган или должностному лицу. Срок рассмотрения — 30 дней. Бесплатно, быстрее</span></div>
+      <div class="row"><span class="rlabel">Судебный (КАС РФ)</span><span class="rtext">Административный иск в суд общей юрисдикции или арбитражный суд. Срок подачи — 3 месяца с момента нарушения. Независимый контроль</span></div>
+      <div class="hl">📌 По <strong>КАС РФ</strong>: при обжаловании действий госоргана <strong>бремя доказывания законности своих действий лежит на органе власти</strong>, а не на гражданине! Это важное отличие от гражданского процесса.</div>
+    </div>
+
+    <div class="complete-wrap"><button class="complete-btn" id="completeBtn" onclick="toggleComplete()">✓ Отметить день как пройденный</button></div>
+  </div>
+
+  <div class="section" id="practice">
+    <div class="section-label">Практические задания — День 6</div>
+    <div class="task-card"><div class="task-num">1</div><div class="task-text">Открой КоАП РФ и найди статьи:<br><strong>7.27 (мелкое хищение), 12.9 (превышение скорости), 20.1 (мелкое хулиганство), 14.15 (нарушение правил продажи).</strong><br>Для каждой запиши: размер штрафа, возможен ли арест, кто рассматривает дело.</div></div>
+    <div class="task-card"><div class="task-num">2</div><div class="task-text">Определи: уголовное или административное правонарушение?<br><br><em style="color:#4A9BBB88">а) Водитель превысил скорость на 40 км/ч<br>б) Грабитель отнял телефон с применением насилия<br>в) Продавец реализовывал товар без кассового чека<br>г) Программист взломал сайт государственного органа<br>д) Подросток 14 лет нецензурно ругался в общественном месте</em></div></div>
+    <div class="task-card"><div class="task-num">3</div><div class="task-text">Ситуация: <em style="color:#4A9BBB88">Налоговая инспекция провела проверку ИП и выписала штраф 50 000 руб. за нарушение порядка ведения кассовых операций. Предприниматель считает штраф незаконным.</em><br><br>Опиши пошагово: как обжаловать это решение? Сроки? Куда обращаться сначала?</div></div>
+    <div class="task-card"><div class="task-num">4</div><div class="task-text">Найди в КоАП РФ <strong>статью 20.25</strong> (уклонение от исполнения административного наказания). Что грозит тому, кто не оплатил штраф вовремя? Запиши ответ.</div></div>
+    <div class="task-card"><div class="task-num">5</div><div class="task-text">Составь памятку: <strong>«Ваши права при составлении протокола об АПН»</strong>. Что вы вправе делать и требовать? Используй ст. 25.1, 28.2 КоАП РФ.</div></div>
+  </div>
+
+  <div class="section" id="terms">
+    <div class="section-label">Ключевые термины — День 6</div>
+    <div class="term-card"><div class="term-name">🏛️ Административное право</div><div class="term-def">Отрасль публичного права, регулирующая общественные отношения в сфере государственного управления и исполнительной власти.</div></div>
+    <div class="term-card"><div class="term-name">⚠️ Административное правонарушение</div><div class="term-def">Противоправное виновное действие (бездействие) лица, за которое КоАП или законом субъекта РФ установлена административная ответственность (ст. 2.1 КоАП).</div></div>
+    <div class="term-card"><div class="term-name">📋 Протокол об АПН</div><div class="term-def">Процессуальный документ, фиксирующий факт административного правонарушения. Составляется должностным лицом. Лицо вправе вносить замечания и не подписывать.</div></div>
+    <div class="term-card"><div class="term-name">📜 Постановление по делу об АПН</div><div class="term-def">Итоговый документ по делу об административном правонарушении — назначает наказание или прекращает дело. Может быть обжаловано в течение 10 дней.</div></div>
+    <div class="term-card"><div class="term-name">⏱️ Срок давности по КоАП</div><div class="term-def">Общий срок — 2 месяца (по делам, рассматриваемым судьёй, — 3 месяца). После истечения — дело обязано быть прекращено.</div></div>
+    <div class="term-card"><div class="term-name">🚫 Дисквалификация</div><div class="term-def">Административное наказание — лишение права занимать руководящие должности в органах управления организаций на срок от 6 месяцев до 3 лет.</div></div>
+    <div class="term-card"><div class="term-name">🏛️ КАС РФ</div><div class="term-def">Кодекс административного судопроизводства (2015) — регулирует порядок обжалования в суде действий и решений государственных органов. Бремя доказывания — на органе власти.</div></div>
+    <div class="term-card"><div class="term-name">📣 Должностное лицо</div><div class="term-def">Лицо, постоянно или временно выполняющее организационно-распорядительные или административно-хозяйственные функции в госоргане или организации. Несёт повышенную ответственность по КоАП.</div></div>
+  </div>
+
+  <div class="section" id="quiz">
+    <div class="section-label">Проверка знаний — 7 вопросов</div>
+    <div class="quiz-card"><div class="quiz-q">1. Чем административное правонарушение отличается от преступления?</div><input class="qi" placeholder="Ваш ответ…"><button class="sb" onclick="toggleAnswer(this)">Показать ответ</button><div class="ab">✓ <strong>Меньшая степень общественной опасности</strong> и мягче санкции. Деяние предусмотрено КоАП, а не УК. Например, кража до 5000 руб. — АПН (ст. 7.27 КоАП), свыше — преступление (ст. 158 УК).</div></div>
+    <div class="quiz-card"><div class="quiz-q">2. В течение какого срока можно обжаловать постановление по делу об АПН?</div><input class="qi" placeholder="Ваш ответ…"><button class="sb" onclick="toggleAnswer(this)">Показать ответ</button><div class="ab">✓ <strong>10 дней</strong> с момента вручения или получения копии постановления (ст. 30.3 КоАП). При пропуске — можно восстановить срок, если причина уважительная.</div></div>
+    <div class="quiz-card"><div class="quiz-q">3. Кто может быть субъектом административного правонарушения?</div><input class="qi" placeholder="Ваш ответ…"><button class="sb" onclick="toggleAnswer(this)">Показать ответ</button><div class="ab">✓ <strong>Физические лица</strong> (с 16 лет), <strong>должностные лица</strong> (несут повышенную ответственность) и <strong>юридические лица</strong> (организации). В отличие от уголовного права — юрлица тоже несут ответственность.</div></div>
+    <div class="quiz-card"><div class="quiz-q">4. Каков общий срок давности привлечения к административной ответственности?</div><input class="qi" placeholder="Ваш ответ…"><button class="sb" onclick="toggleAnswer(this)">Показать ответ</button><div class="ab">✓ <strong>2 месяца</strong> (ст. 4.5 КоАП). По делам, рассматриваемым судьёй, — 3 месяца. По отдельным категориям (коррупция, нарушение законодательства о выборах) — до 6 лет.</div></div>
+    <div class="quiz-card"><div class="quiz-q">5. Какой максимальный срок административного ареста?</div><input class="qi" placeholder="Ваш ответ…"><button class="sb" onclick="toggleAnswer(this)">Показать ответ</button><div class="ab">✓ Общий максимум — <strong>30 суток</strong>. По отдельным статьям (нарушение режима ЧП, незаконный оборот наркотиков) — до <strong>60 суток</strong>. Назначает только суд.</div></div>
+    <div class="quiz-card"><div class="quiz-q">6. Что такое дисквалификация?</div><input class="qi" placeholder="Ваш ответ…"><button class="sb" onclick="toggleAnswer(this)">Показать ответ</button><div class="ab">✓ Административное наказание — лишение права занимать <strong>руководящие должности</strong> в исполнительном органе организации. Срок — от 6 месяцев до 3 лет. Применяется к директорам, главным бухгалтерам.</div></div>
+    <div class="quiz-card"><div class="quiz-q">7. Кто несёт бремя доказывания при обжаловании действий госоргана по КАС РФ?</div><input class="qi" placeholder="Ваш ответ…"><button class="sb" onclick="toggleAnswer(this)">Показать ответ</button><div class="ab">✓ <strong>Государственный орган</strong> обязан доказать законность своих действий. Гражданин доказывает лишь нарушение своих прав. Это важное преимущество при оспаривании решений власти.</div></div>
+  </div>
+
+  <div class="section" id="resources">
+    <div class="section-label">Источники — День 6</div>
+    <div class="res-card"><div class="res-name">📚 КоАП РФ — Кодекс об административных правонарушениях</div><a class="res-link" href="https://www.consultant.ru/document/cons_doc_LAW_34661/" target="_blank">Открыть →</a></div>
+    <div class="res-card"><div class="res-name">📚 КАС РФ — административное судопроизводство</div><a class="res-link" href="https://www.consultant.ru/document/cons_doc_LAW_176147/" target="_blank">Открыть →</a></div>
+    <div class="res-card"><div class="res-name">🏛️ МВД России — официальный сайт</div><a class="res-link" href="https://мвд.рф/" target="_blank">Открыть →</a></div>
+    <div class="res-card"><div class="res-name">⚡ Генеральная Прокуратура РФ</div><a class="res-link" href="https://genproc.gov.ru/" target="_blank">Открыть →</a></div>
+    <div class="res-card"><div class="res-name">🏛️ Верховный Суд РФ</div><a class="res-link" href="https://www.vsrf.ru/" target="_blank">Открыть →</a></div>
+    <div class="res-card"><div class="res-name">📚 КонсультантПлюс</div><a class="res-link" href="https://www.consultant.ru/" target="_blank">Открыть →</a></div>
+    <div style="margin-top:18px;padding:14px;background:var(--bg3);border:1px solid #4A9BBB22;border-radius:10px;font-size:14px;color:var(--text-muted);line-height:1.8">💡 <strong style="color:var(--gold-dim)">Совет:</strong> Административное право — то, с чем ты столкнёшься в жизни чаще всего: штрафы ГИБДД, споры с налоговой, жалобы на чиновников. Хорошо знай КоАП — он защищает тебя ежедневно.</div>
+  </div>
+
+</div>
+<script>
+  function showTab(id,btn){document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));document.getElementById(id).classList.add('active');btn.classList.add('active');window.scrollTo({top:0,behavior:'smooth'})}
+  function toggleAnswer(btn){const box=btn.nextElementSibling;const v=box.classList.contains('visible');box.classList.toggle('visible',!v);btn.textContent=v?'Показать ответ':'Скрыть ответ'}
+  let done=false;function toggleComplete(){done=!done;const btn=document.getElementById('completeBtn');btn.classList.toggle('done',done);btn.textContent=done?'🏆 День 6 пройден!':'✓ Отметить день как пройденный'}
+</script>
+</body>
+</html>

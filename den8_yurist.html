@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>День 8 — Уголовный процесс</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{--gold:#9B5AB5;--gold-dim:#6B3A85;--bg:#060408;--bg2:#0a0610;--bg3:#100818;--text:#dcc8e8;--text-dim:#9878a8;--text-muted:#5a3a6a}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--text);font-family:'Crimson Pro',Georgia,serif;font-size:17px;line-height:1.7;min-height:100vh}
+  body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 80% 50% at 20% 0%,#1a0a2a33,transparent 60%),radial-gradient(ellipse 60% 40% at 80% 100%,#0a021a33,transparent 60%);pointer-events:none;z-index:0}
+  .header{background:linear-gradient(180deg,#100818,#080410);border-bottom:1px solid #9B5AB533;padding:18px 20px 12px;position:sticky;top:0;z-index:100}
+  .header-badge{font-size:10px;letter-spacing:3px;color:var(--gold-dim);text-transform:uppercase;margin-bottom:4px}
+  .header-title{font-family:'Playfair Display',serif;font-size:21px;font-weight:900;color:var(--gold)}
+  .header-sub{font-size:13px;color:var(--text-muted);margin-top:3px}
+  .progress-bar-wrap{background:#100818;border:1px solid #9B5AB522;border-radius:20px;height:7px;overflow:hidden;margin-top:10px}
+  .progress-bar{height:100%;background:linear-gradient(90deg,#6B3A85,#9B5AB5,#BB7AD5);border-radius:20px;width:26.6%}
+  .tabs{display:flex;gap:6px;padding:12px 20px;background:var(--bg2);border-bottom:1px solid #9B5AB522;overflow-x:auto;scrollbar-width:none}
+  .tabs::-webkit-scrollbar{display:none}
+  .tab{flex-shrink:0;padding:8px 16px;border-radius:8px;border:1px solid #9B5AB522;background:transparent;color:var(--text-muted);font-family:'Crimson Pro',serif;font-size:14px;cursor:pointer;transition:all 0.2s;white-space:nowrap}
+  .tab.active{background:linear-gradient(135deg,#9B5AB533,#9B5AB511);border-color:#9B5AB577;color:var(--gold)}
+  .content{padding:20px;position:relative;z-index:1;max-width:700px;margin:0 auto}
+  .section{display:none;animation:fadeIn 0.4s ease}
+  .section.active{display:block}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+  .section-label{font-size:10px;letter-spacing:3px;color:var(--gold-dim);text-transform:uppercase;margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid #9B5AB522}
+  .card{background:var(--bg3);border:1px solid #9B5AB522;border-left:3px solid var(--gold);border-radius:12px;padding:18px;margin-bottom:16px}
+  .card h3{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:var(--gold);margin-bottom:12px}
+  .card p,.card ul{color:var(--text-dim);font-size:16px;line-height:1.85}
+  .card ul{padding-left:20px}
+  .card li{margin-bottom:5px}
+  .hl{background:#9B5AB511;border:1px solid #9B5AB533;border-radius:8px;padding:12px 14px;margin:12px 0;font-size:15px;color:var(--gold-dim)}
+  .stage{display:flex;gap:0;flex-direction:column;margin-top:10px}
+  .stage-item{background:#0a0610;border:1px solid #9B5AB522;border-radius:0;padding:12px 16px;display:flex;gap:14px;align-items:flex-start;position:relative}
+  .stage-item:first-child{border-radius:10px 10px 0 0}
+  .stage-item:last-child{border-radius:0 0 10px 10px}
+  .stage-item::before{content:'';position:absolute;left:30px;bottom:-1px;width:2px;height:1px;background:var(--gold);opacity:0.3}
+  .stage-num{width:28px;height:28px;border-radius:50%;background:#9B5AB522;border:1px solid #9B5AB544;display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--gold);font-weight:700;flex-shrink:0}
+  .stage-body{flex:1}
+  .stage-title{font-size:14px;font-weight:700;color:var(--text);margin-bottom:3px}
+  .stage-desc{font-size:14px;color:var(--text-dim);line-height:1.6}
+  .row{background:#0a0610;border:1px solid #9B5AB51a;border-radius:8px;padding:10px 14px;display:flex;gap:12px;align-items:flex-start;margin-bottom:6px}
+  .rlabel{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--gold);font-weight:700;flex-shrink:0;min-width:90px;padding-top:2px}
+  .rtext{font-size:15px;color:var(--text-dim);line-height:1.7}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+  .box{background:#0a0610;border:1px solid #9B5AB522;border-radius:8px;padding:12px 14px}
+  .box-title{font-size:13px;font-weight:700;color:var(--gold);margin-bottom:8px}
+  .box-body{font-size:14px;color:var(--text-dim);line-height:1.8}
+  .task-card{background:var(--bg3);border:1px solid #9B5AB522;border-radius:12px;padding:16px 18px;margin-bottom:12px;display:flex;gap:14px}
+  .task-num{width:32px;height:32px;border-radius:50%;flex-shrink:0;background:#9B5AB522;border:1px solid #9B5AB555;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:bold;color:var(--gold)}
+  .task-text{font-size:16px;color:var(--text-dim);line-height:1.75}
+  .term-card{background:var(--bg3);border:1px solid #9B5AB522;border-radius:10px;padding:14px 16px;margin-bottom:10px}
+  .term-name{font-family:'Playfair Display',serif;font-size:16px;color:var(--gold);margin-bottom:6px}
+  .term-def{font-size:15px;color:var(--text-dim);line-height:1.7}
+  .quiz-card{background:var(--bg3);border:1px solid #9B5AB522;border-radius:12px;padding:18px;margin-bottom:14px}
+  .quiz-q{font-size:16px;font-weight:600;color:var(--text);margin-bottom:12px;line-height:1.5}
+  .qi{width:100%;background:#0a0610;border:1px solid #9B5AB533;color:var(--text);padding:10px 14px;border-radius:8px;font-family:'Crimson Pro',serif;font-size:15px;outline:none}
+  .qi:focus{border-color:var(--gold)}
+  .sb{margin-top:10px;background:none;border:1px solid #9B5AB533;color:var(--gold-dim);border-radius:6px;padding:6px 14px;font-family:'Crimson Pro',serif;font-size:13px;cursor:pointer}
+  .ab{display:none;margin-top:10px;background:#9B5AB50d;border:1px solid #9B5AB533;border-radius:8px;padding:12px 14px;font-size:15px;color:var(--gold-dim);line-height:1.7}
+  .ab.visible{display:block;animation:fadeIn 0.3s ease}
+  .res-card{background:var(--bg3);border:1px solid #9B5AB522;border-radius:10px;padding:14px 16px;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .res-name{font-size:15px;color:var(--text-dim)}
+  .res-link{color:var(--gold);font-size:12px;text-decoration:none;border:1px solid #9B5AB544;border-radius:5px;padding:4px 12px;flex-shrink:0}
+  .complete-wrap{text-align:center;padding:24px 0 8px}
+  .complete-btn{background:linear-gradient(135deg,#9B5AB533,#9B5AB511);border:1px solid #9B5AB566;color:var(--gold);border-radius:10px;padding:12px 32px;font-family:'Playfair Display',serif;font-size:16px;cursor:pointer;transition:all 0.3s}
+  .complete-btn.done{background:linear-gradient(135deg,#9B5AB566,#9B5AB533)}
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="header-badge">⚖️ Академия Российского Права · 30 дней · Неделя 2</div>
+  <div class="header-title">⚔️ День 8 — Уголовный процесс</div>
+  <div class="header-sub">УПК РФ · Стадии · Участники · Права обвиняемого</div>
+  <div class="progress-bar-wrap"><div class="progress-bar"></div></div>
+</div>
+<div class="tabs">
+  <button class="tab active" onclick="showTab('theory',this)">📖 Теория</button>
+  <button class="tab" onclick="showTab('practice',this)">✏️ Практика</button>
+  <button class="tab" onclick="showTab('terms',this)">📌 Термины</button>
+  <button class="tab" onclick="showTab('quiz',this)">🧪 Тест</button>
+  <button class="tab" onclick="showTab('resources',this)">🔗 Источники</button>
+</div>
+<div class="content">
+
+  <div class="section active" id="theory">
+    <div class="section-label">Теоретический материал — День 8</div>
+
+    <div class="card">
+      <h3>1. Уголовный процесс — что это?</h3>
+      <p><strong style="color:var(--gold)">Уголовный процесс (уголовное судопроизводство)</strong> — урегулированная УПК РФ деятельность дознавателя, следователя, прокурора и суда по возбуждению, расследованию и рассмотрению уголовных дел.</p>
+      <div class="hl">📚 Основной источник — <strong>Уголовно-процессуальный кодекс РФ (УПК РФ)</strong>, принят 18.12.2001, вступил в силу 1.07.2002. Регулирует всё — от первого звонка о преступлении до исполнения приговора.</div>
+      <p>Принципы уголовного процесса (Глава 2 УПК):</p>
+      <ul>
+        <li>Законность при расследовании и судебном разбирательстве</li>
+        <li>Презумпция невиновности (ст. 14)</li>
+        <li>Состязательность сторон (обвинение vs защита)</li>
+        <li>Обеспечение права на защиту (ст. 16)</li>
+        <li>Свобода оценки доказательств судом</li>
+        <li>Неприкосновенность жилища, тайна переписки</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>2. Стадии уголовного процесса</h3>
+      <p>Уголовный процесс — это <strong style="color:var(--gold)">8 последовательных стадий</strong>:</p>
+      <div class="stage">
+        <div class="stage-item"><div class="stage-num">1</div><div class="stage-body"><div class="stage-title">Возбуждение уголовного дела</div><div class="stage-desc">Поводы: заявление, явка с повинной, рапорт сотрудника. Решение — в течение 3 суток (до 30 суток с разрешения). Постановление о возбуждении или об отказе.</div></div></div>
+        <div class="stage-item"><div class="stage-num">2</div><div class="stage-body"><div class="stage-title">Предварительное расследование</div><div class="stage-desc">Следствие (СК, ФСБ, МВД) или дознание (МВД, ФССП). Срок следствия — 2 месяца, продлевается до 12 мес. и более. Сбор доказательств, допросы, обыски, экспертизы.</div></div></div>
+        <div class="stage-item"><div class="stage-num">3</div><div class="stage-body"><div class="stage-title">Направление дела прокурору</div><div class="stage-desc">Следователь составляет обвинительное заключение → направляет прокурору. Прокурор утверждает его или возвращает на доработку.</div></div></div>
+        <div class="stage-item"><div class="stage-num">4</div><div class="stage-body"><div class="stage-title">Назначение судебного заседания</div><div class="stage-desc">Судья изучает дело, решает вопрос о его направлении в суд или возврате прокурору. Предварительное слушание (при необходимости).</div></div></div>
+        <div class="stage-item"><div class="stage-num">5</div><div class="stage-body"><div class="stage-title">Судебное разбирательство</div><div class="stage-desc">Главная стадия. Исследование доказательств, прения сторон, последнее слово подсудимого, вынесение приговора.</div></div></div>
+        <div class="stage-item"><div class="stage-num">6</div><div class="stage-body"><div class="stage-title">Апелляция</div><div class="stage-desc">Обжалование приговора в течение 10 суток. Апелляционная инстанция рассматривает дело по существу заново.</div></div></div>
+        <div class="stage-item"><div class="stage-num">7</div><div class="stage-body"><div class="stage-title">Кассация и надзор</div><div class="stage-desc">Проверка законности вступившего в силу приговора. Кассация — 6 месяцев. Надзор — Президиум Верховного Суда РФ.</div></div></div>
+        <div class="stage-item"><div class="stage-num">8</div><div class="stage-body"><div class="stage-title">Исполнение приговора</div><div class="stage-desc">Передача осуждённого в исправительное учреждение. Контроль — суд, прокурор, уголовно-исполнительная инспекция.</div></div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>3. Участники уголовного процесса</h3>
+      <div class="two">
+        <div class="box"><div class="box-title">⚔️ Сторона обвинения</div><div class="box-body">• <strong>Следователь</strong> — расследует дело<br>• <strong>Дознаватель</strong> — дознание по менее тяжким<br>• <strong>Прокурор</strong> — надзор + обвинение в суде<br>• <strong>Потерпевший</strong> — пострадавший от преступления<br>• <strong>Гражданский истец</strong></div></div>
+        <div class="box"><div class="box-title">🛡️ Сторона защиты</div><div class="box-body">• <strong>Подозреваемый</strong> — до предъявления обвинения<br>• <strong>Обвиняемый / подсудимый</strong><br>• <strong>Адвокат-защитник</strong> — обязательный с момента задержания<br>• <strong>Законный представитель</strong> (для несовершеннолетних)<br>• <strong>Гражданский ответчик</strong></div></div>
+      </div>
+      <div class="row" style="margin-top:10px"><span class="rlabel">⚖️ Суд</span><span class="rtext">Независимый арбитр — не сторона, а орган правосудия. Исследует доказательства и выносит приговор.</span></div>
+      <div class="row"><span class="rlabel">👁️ Иные</span><span class="rtext">Свидетель, эксперт, специалист, переводчик, понятые — вспомогательные участники</span></div>
+    </div>
+
+    <div class="card">
+      <h3>4. Права подозреваемого и обвиняемого</h3>
+      <p>Это <strong style="color:var(--gold)">ключевые права</strong>, которые должен знать каждый юрист наизусть:</p>
+      <div class="row"><span class="rlabel">Право на защитника</span><span class="rtext">С момента задержания или предъявления обвинения. Адвокат по назначению — бесплатно, если нет своего (ст. 51 УПК)</span></div>
+      <div class="row"><span class="rlabel">Право молчать</span><span class="rtext">Ст. 51 Конституции — не свидетельствовать против себя. «Я воспользуюсь ст. 51 Конституции» — законная позиция</span></div>
+      <div class="row"><span class="rlabel">Знать обвинение</span><span class="rtext">Право знать, в чём обвиняется. Обвинение должно быть предъявлено не позднее 3 суток с момента задержания</span></div>
+      <div class="row"><span class="rlabel">Иметь переводчика</span><span class="rtext">Бесплатно, если не владеет языком судопроизводства</span></div>
+      <div class="row"><span class="rlabel">Знакомиться с делом</span><span class="rtext">По окончании следствия — знакомиться с материалами дела в полном объёме</span></div>
+      <div class="row"><span class="rlabel">Обжаловать</span><span class="rtext">Любые действия следователя, прокурора, суда — в вышестоящий орган или суд</span></div>
+      <div class="hl">🚨 <strong>Миранда по-русски:</strong> При задержании должны сообщить: причину задержания, право на адвоката, право молчать. Нарушение — доказательства признаются недопустимыми.</div>
+    </div>
+
+    <div class="card">
+      <h3>5. Меры пресечения</h3>
+      <p>Меры пресечения — ограничения свободы обвиняемого до приговора:</p>
+      <div class="row"><span class="rlabel">Подписка о невыезде</span><span class="rtext">Нельзя покидать место жительства без разрешения. Самая мягкая мера.</span></div>
+      <div class="row"><span class="rlabel">Запрет действий</span><span class="rtext">Запрет выходить в определённое время, пользоваться связью, управлять автомобилем</span></div>
+      <div class="row"><span class="rlabel">Залог</span><span class="rtext">Деньги или имущество в обеспечение явки. При нарушении — обращается в доход государства</span></div>
+      <div class="row"><span class="rlabel">Домашний арест</span><span class="rtext">Нахождение дома. Срок засчитывается в наказание как 2:1 (1 день ареста = 2 дня лишения свободы)</span></div>
+      <div class="row"><span class="rlabel">Заключение под стражу</span><span class="rtext">СИЗО. Только по решению суда. Срок — 2 месяца, продлевается. Засчитывается в срок наказания 1:1</span></div>
+      <div class="hl">⚖️ Заключение под стражу — исключительная мера. Суд должен убедиться, что нет более мягкой альтернативы (ст. 108 УПК).</div>
+    </div>
+
+    <div class="complete-wrap"><button class="complete-btn" id="completeBtn" onclick="toggleComplete()">✓ Отметить день как пройденный</button></div>
+  </div>
+
+  <div class="section" id="practice">
+    <div class="section-label">Практические задания — День 8</div>
+    <div class="task-card"><div class="task-num">1</div><div class="task-text">Составь схему стадий уголовного процесса в виде цепочки: от заявления о преступлении до исполнения приговора. Укажи сроки каждой стадии.</div></div>
+    <div class="task-card"><div class="task-num">2</div><div class="task-text">Ситуация: <em style="color:#9B5AB588">Гражданина задержали по подозрению в краже. В полиции его начали допрашивать без адвоката и сказали «подпиши признание, иначе будет хуже».</em><br><br>Какие права нарушены? Назови статьи УПК и Конституции. Что должен сделать гражданин?</div></div>
+    <div class="task-card"><div class="task-num">3</div><div class="task-text">Найди в УПК РФ и прочитай:<br><strong>Ст. 46 (подозреваемый), Ст. 47 (обвиняемый), Ст. 51 (обязательное участие защитника), Ст. 108 (заключение под стражу).</strong><br>Выпиши основные права каждого участника.</div></div>
+    <div class="task-card"><div class="task-num">4</div><div class="task-text">Определи стадию уголовного процесса:<br><br><em style="color:#9B5AB588">а) Следователь проводит обыск в квартире подозреваемого<br>б) Судья зачитывает приговор<br>в) Прокурор произносит обвинительную речь в суде<br>г) Осуждённый обжалует приговор<br>д) Гражданин написал заявление в полицию о краже</em></div></div>
+    <div class="task-card"><div class="task-num">5</div><div class="task-text">Открой УПК РФ и найди основания для <strong>заключения под стражу</strong> (ст. 97, 108). Когда суд ОБЯЗАН избрать именно эту меру? Когда не может? Запиши ответ.</div></div>
+  </div>
+
+  <div class="section" id="terms">
+    <div class="section-label">Ключевые термины — День 8</div>
+    <div class="term-card"><div class="term-name">⚔️ Уголовный процесс</div><div class="term-def">Урегулированная УПК РФ деятельность органов дознания, следствия, прокуратуры и суда по возбуждению, расследованию, рассмотрению и разрешению уголовных дел.</div></div>
+    <div class="term-card"><div class="term-name">🔍 Подозреваемый</div><div class="term-def">Лицо, задержанное по подозрению в преступлении, либо в отношении которого возбуждено уголовное дело или применена мера пресечения до предъявления обвинения (ст. 46 УПК).</div></div>
+    <div class="term-card"><div class="term-name">⚖️ Обвиняемый</div><div class="term-def">Лицо, в отношении которого вынесено постановление о привлечении в качестве обвиняемого или обвинительный акт. В суде — подсудимый (ст. 47 УПК).</div></div>
+    <div class="term-card"><div class="term-name">🛡️ Защитник (адвокат)</div><div class="term-def">Лицо, осуществляющее защиту прав подозреваемого (обвиняемого). Участвует с момента задержания. При отсутствии своего — назначается бесплатно (ст. 49–51 УПК).</div></div>
+    <div class="term-card"><div class="term-name">📋 Обвинительное заключение</div><div class="term-def">Итоговый документ предварительного следствия, содержащий изложение обвинения, доказательств, составленный следователем и утверждённый прокурором.</div></div>
+    <div class="term-card"><div class="term-name">🔒 Заключение под стражу</div><div class="term-def">Самая строгая мера пресечения — содержание в СИЗО. Применяется только по решению суда. Засчитывается в срок наказания (ст. 108 УПК).</div></div>
+    <div class="term-card"><div class="term-name">🏛️ Состязательность</div><div class="term-def">Принцип уголовного процесса: обвинение и защита имеют равные права по представлению доказательств. Суд — независимый арбитр, не стоящий ни на чьей стороне.</div></div>
+    <div class="term-card"><div class="term-name">📄 Протокол допроса</div><div class="term-def">Процессуальный документ, фиксирующий ход и результаты допроса. Подписывается допрашиваемым. Вправе вносить замечания. Отказ подписать — фиксируется.</div></div>
+  </div>
+
+  <div class="section" id="quiz">
+    <div class="section-label">Проверка знаний — 7 вопросов</div>
+    <div class="quiz-card"><div class="quiz-q">1. Назовите 8 стадий уголовного процесса по порядку.</div><input class="qi" placeholder="Ваш ответ…"><button class="sb" onclick="toggleAnswer(this)">Показать ответ</button><div class="ab">✓ 1. Возбуждение дела → 2. Предварительное расследование → 3. Направление дела прокурору → 4. Назначение судебного заседания → 5. Судебное разбирательство → 6. Апелляция → 7. Кассация/Надзор → 8. Исполнение приговора.</div></div>
+    <div class="quiz-card"><div class="quiz-q">2. С какого момента подозреваемый имеет право на адвоката?</div><input class="qi" placeholder="Ваш ответ…"><button class="sb" onclick="toggleAnswer(this)">Показать ответ</button><div class="ab">✓ С <strong>момента фактического задержания</strong> — до первого допроса. Отказ следователя в допуске адвоката — грубое нарушение УПК, доказательства, полученные без защитника, недопустимы.</div></div>
+    <div class="quiz-card"><div class="quiz-q">3. Что такое состязательность в уголовном процессе?</div><input class="qi" placeholder="Ваш ответ…"><button class="sb" onclick="toggleAnswer(this)">Показать ответ</button><div class="ab">✓ <strong>Равноправие сторон</strong> обвинения и защиты при представлении доказательств. Суд не собирает доказательства за стороны — он оценивает представленные. Это гарантия независимого правосудия.</div></div>
+    <div class="quiz-card"><div class="quiz-q">4. Каков срок предварительного следствия по умолчанию?</div><input class="qi" placeholder="Ваш ответ…"><button class="sb" onclick="toggleAnswer(this)">Показать ответ</button><div class="ab">✓ <strong>2 месяца</strong> (ст. 162 УПК). Может быть продлён до 3 месяцев руководителем следственного органа, до 12 месяцев — при особой сложности. Свыше 12 мес. — только в исключительных случаях Председателем СКР или руководством ФСБ/МВД.</div></div>
+    <div class="quiz-card"><div class="quiz-q">5. Чем подозреваемый отличается от обвиняемого?</div><input class="qi" placeholder="Ваш ответ…"><button class="sb" onclick="toggleAnswer(this)">Показать ответ</button><div class="ab">✓ <strong>Подозреваемый</strong> — лицо задержанное или в отношении которого только возбуждено дело, обвинение ещё не предъявлено. <strong>Обвиняемый</strong> — вынесено постановление о привлечении в качестве обвиняемого, обвинение предъявлено официально.</div></div>
+    <div class="quiz-card"><div class="quiz-q">6. Когда применяется заключение под стражу?</div><input class="qi" placeholder="Ваш ответ…"><button class="sb" onclick="toggleAnswer(this)">Показать ответ</button><div class="ab">✓ По решению суда при наличии оснований (ст. 97): может скрыться, продолжить преступную деятельность, угрожать свидетелям, уничтожить доказательства. По тяжким преступлениям возможна как обязательная мера. Срок — 2 мес., продлевается судом.</div></div>
+    <div class="quiz-card"><div class="quiz-q">7. Что происходит с доказательствами, полученными с нарушением УПК?</div><input class="qi" placeholder="Ваш ответ…"><button class="sb" onclick="toggleAnswer(this)">Показать ответ</button><div class="ab">✓ Они признаются <strong>недопустимыми</strong> и не могут быть положены в основу обвинения (ст. 75 УПК). «Плоды отравленного дерева» — доказательства, полученные из незаконных источников, тоже недопустимы.</div></div>
+  </div>
+
+  <div class="section" id="resources">
+    <div class="section-label">Источники — День 8</div>
+    <div class="res-card"><div class="res-name">📚 УПК РФ — Уголовно-процессуальный кодекс</div><a class="res-link" href="https://www.consultant.ru/document/cons_doc_LAW_34481/" target="_blank">Открыть →</a></div>
+    <div class="res-card"><div class="res-name">🔍 Следственный комитет РФ</div><a class="res-link" href="https://sledcom.ru/" target="_blank">Открыть →</a></div>
+    <div class="res-card"><div class="res-name">⚡ Генеральная Прокуратура РФ</div><a class="res-link" href="https://genproc.gov.ru/" target="_blank">Открыть →</a></div>
+    <div class="res-card"><div class="res-name">🏛️ Верховный Суд РФ — уголовная практика</div><a class="res-link" href="https://www.vsrf.ru/documents/practice/" target="_blank">Открыть →</a></div>
+    <div class="res-card"><div class="res-name">📖 Судебные акты — sudact.ru</div><a class="res-link" href="https://sudact.ru/" target="_blank">Открыть →</a></div>
+    <div class="res-card"><div class="res-name">📚 КонсультантПлюс</div><a class="res-link" href="https://www.consultant.ru/" target="_blank">Открыть →</a></div>
+    <div style="margin-top:18px;padding:14px;background:var(--bg3);border:1px solid #9B5AB522;border-radius:10px;font-size:14px;color:var(--text-muted);line-height:1.8">💡 <strong style="color:var(--gold-dim)">Совет:</strong> УПК — библия следователя. Знай наизусть права подозреваемого (ст. 46) и обвиняемого (ст. 47). В реальном деле ты обязан разъяснить их немедленно — иначе любые доказательства окажутся недопустимыми.</div>
+  </div>
+
+</div>
+<script>
+  function showTab(id,btn){document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));document.getElementById(id).classList.add('active');btn.classList.add('active');window.scrollTo({top:0,behavior:'smooth'})}
+  function toggleAnswer(btn){const box=btn.nextElementSibling;const v=box.classList.contains('visible');box.classList.toggle('visible',!v);btn.textContent=v?'Показать ответ':'Скрыть ответ'}
+  let done=false;function toggleComplete(){done=!done;const btn=document.getElementById('completeBtn');btn.classList.toggle('done',done);btn.textContent=done?'🏆 День 8 пройден!':'✓ Отметить день как пройденный'}
+</script>
+</body>
+</html>

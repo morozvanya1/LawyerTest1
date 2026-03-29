@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>День 7 — Повторение и практика</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{--gold:#C9A84C;--gold-dim:#8B6914;--bg:#080604;--bg2:#110e06;--bg3:#1a1208;--text:#e8dcc8;--text-dim:#a89878;--text-muted:#6a5a3a}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--text);font-family:'Crimson Pro',Georgia,serif;font-size:17px;line-height:1.7;min-height:100vh}
+  body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 80% 50% at 20% 0%,#2a1e0433,transparent 60%),radial-gradient(ellipse 60% 40% at 80% 100%,#1a100233,transparent 60%);pointer-events:none;z-index:0}
+  .header{background:linear-gradient(180deg,#1a1208,#0e0a04);border-bottom:1px solid #C9A84C33;padding:18px 20px 12px;position:sticky;top:0;z-index:100}
+  .header-badge{font-size:10px;letter-spacing:3px;color:var(--gold-dim);text-transform:uppercase;margin-bottom:4px}
+  .header-title{font-family:'Playfair Display',serif;font-size:21px;font-weight:900;color:var(--gold)}
+  .header-sub{font-size:13px;color:var(--text-muted);margin-top:3px}
+  .progress-bar-wrap{background:#1a1208;border:1px solid #C9A84C22;border-radius:20px;height:7px;overflow:hidden;margin-top:10px}
+  .progress-bar{height:100%;background:linear-gradient(90deg,#8B6914,#C9A84C,#E8C86A);border-radius:20px;width:23.3%}
+  .tabs{display:flex;gap:6px;padding:12px 20px;background:var(--bg2);border-bottom:1px solid #C9A84C22;overflow-x:auto;scrollbar-width:none}
+  .tabs::-webkit-scrollbar{display:none}
+  .tab{flex-shrink:0;padding:8px 16px;border-radius:8px;border:1px solid #C9A84C22;background:transparent;color:var(--text-muted);font-family:'Crimson Pro',serif;font-size:14px;cursor:pointer;transition:all 0.2s;white-space:nowrap}
+  .tab.active{background:linear-gradient(135deg,#C9A84C33,#C9A84C11);border-color:#C9A84C77;color:var(--gold)}
+  .content{padding:20px;position:relative;z-index:1;max-width:700px;margin:0 auto}
+  .section{display:none;animation:fadeIn 0.4s ease}
+  .section.active{display:block}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+  .section-label{font-size:10px;letter-spacing:3px;color:var(--gold-dim);text-transform:uppercase;margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid #C9A84C22}
+  .card{background:var(--bg3);border:1px solid #C9A84C22;border-left:3px solid var(--gold);border-radius:12px;padding:18px;margin-bottom:16px}
+  .card h3{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:var(--gold);margin-bottom:12px}
+  .card p,.card ul{color:var(--text-dim);font-size:16px;line-height:1.85}
+  .card ul{padding-left:20px}
+  .card li{margin-bottom:5px}
+  .hl{background:#C9A84C11;border:1px solid #C9A84C33;border-radius:8px;padding:12px 14px;margin:12px 0;font-size:15px;color:var(--gold-dim)}
+  .week-block{background:var(--bg3);border:1px solid #C9A84C22;border-radius:12px;padding:16px;margin-bottom:12px}
+  .week-title{font-family:'Playfair Display',serif;font-size:16px;color:var(--gold);margin-bottom:10px;display:flex;align-items:center;gap:8px}
+  .day-row{display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid #C9A84C11}
+  .day-row:last-child{border-bottom:none}
+  .day-num{font-size:11px;color:var(--gold);font-weight:700;min-width:55px;flex-shrink:0;padding-top:2px}
+  .day-content{font-size:15px;color:var(--text-dim);line-height:1.6}
+  .day-key{font-size:13px;color:var(--text-muted);margin-top:3px}
+  .mega-quiz .quiz-card{background:var(--bg3);border:1px solid #C9A84C22;border-radius:12px;padding:18px;margin-bottom:14px}
+  .quiz-q{font-size:16px;font-weight:600;color:var(--text);margin-bottom:12px;line-height:1.5}
+  .quiz-meta{font-size:11px;color:var(--gold-dim);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px}
+  .qi{width:100%;background:#0e0c08;border:1px solid #C9A84C33;color:var(--text);padding:10px 14px;border-radius:8px;font-family:'Crimson Pro',serif;font-size:15px;outline:none}
+  .qi:focus{border-color:var(--gold)}
+  .sb{margin-top:10px;background:none;border:1px solid #C9A84C33;color:var(--gold-dim);border-radius:6px;padding:6px 14px;font-family:'Crimson Pro',serif;font-size:13px;cursor:pointer}
+  .ab{display:none;margin-top:10px;background:#C9A84C0d;border:1px solid #C9A84C33;border-radius:8px;padding:12px 14px;font-size:15px;color:var(--gold-dim);line-height:1.7}
+  .ab.visible{display:block;animation:fadeIn 0.3s ease}
+  .case-card{background:var(--bg3);border:1px solid #C9A84C33;border-radius:12px;padding:18px;margin-bottom:16px}
+  .case-title{font-family:'Playfair Display',serif;font-size:16px;color:var(--gold);margin-bottom:10px}
+  .case-text{font-size:15px;color:var(--text-dim);line-height:1.8;font-style:italic;border-left:2px solid #C9A84C44;padding-left:14px;margin-bottom:12px}
+  .case-questions{font-size:15px;color:var(--text-dim);line-height:1.8}
+  .case-questions li{margin-bottom:6px}
+  .score-card{background:linear-gradient(135deg,#1a1208,#221604);border:1px solid #C9A84C44;border-radius:14px;padding:20px;text-align:center;margin-bottom:20px}
+  .score-icon{font-size:40px;margin-bottom:8px}
+  .score-title{font-family:'Playfair Display',serif;font-size:20px;color:var(--gold);margin-bottom:6px}
+  .score-text{font-size:14px;color:var(--text-muted);line-height:1.8}
+  .task-card{background:var(--bg3);border:1px solid #C9A84C22;border-radius:12px;padding:16px 18px;margin-bottom:12px;display:flex;gap:14px}
+  .task-num{width:32px;height:32px;border-radius:50%;flex-shrink:0;background:#C9A84C22;border:1px solid #C9A84C55;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:bold;color:var(--gold)}
+  .task-text{font-size:16px;color:var(--text-dim);line-height:1.75}
+  .complete-wrap{text-align:center;padding:24px 0 8px}
+  .complete-btn{background:linear-gradient(135deg,#C9A84C33,#C9A84C11);border:1px solid #C9A84C66;color:var(--gold);border-radius:10px;padding:12px 32px;font-family:'Playfair Display',serif;font-size:16px;cursor:pointer;transition:all 0.3s}
+  .complete-btn.done{background:linear-gradient(135deg,#C9A84C66,#C9A84C33)}
+  .checklist{display:grid;gap:8px;margin-top:12px}
+  .check-item{background:#0e0c08;border:1px solid #C9A84C22;border-radius:8px;padding:10px 14px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:all 0.2s}
+  .check-item.checked{background:#C9A84C11;border-color:#C9A84C44}
+  .check-box{width:20px;height:20px;border-radius:4px;border:1px solid #C9A84C44;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--gold)}
+  .check-item.checked .check-box{background:#C9A84C33;border-color:#C9A84C}
+  .check-text{font-size:15px;color:var(--text-dim)}
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="header-badge">⚖️ Академия Российского Права · 30 дней</div>
+  <div class="header-title">📋 День 7 — Итоги недели 1</div>
+  <div class="header-sub">Повторение · Мегатест · Разбор кейсов · Самооценка</div>
+  <div class="progress-bar-wrap"><div class="progress-bar"></div></div>
+</div>
+<div class="tabs">
+  <button class="tab active" onclick="showTab('review',this)">📚 Повторение</button>
+  <button class="tab" onclick="showTab('megaquiz',this)">🏆 Мегатест</button>
+  <button class="tab" onclick="showTab('cases',this)">⚖️ Кейсы</button>
+  <button class="tab" onclick="showTab('checklist',this)">✅ Чеклист</button>
+</div>
+<div class="content">
+
+  <!-- REVIEW -->
+  <div class="section active" id="review">
+    <div class="section-label">Конспект недели 1 — вся теория кратко</div>
+
+    <div class="score-card">
+      <div class="score-icon">🎓</div>
+      <div class="score-title">Неделя 1 завершена!</div>
+      <div class="score-text">За 6 дней ты прошёл: теорию права, Конституцию, правоотношения, гражданское, уголовное и административное право. Сегодня — закрепляем и проверяем знания.</div>
+    </div>
+
+    <div class="week-block">
+      <div class="week-title">📖 День 1 — Теория государства и права</div>
+      <div class="day-row"><span class="day-num">Главное:</span><div><div class="day-content">Право = система норм + государственное принуждение. Норма = гипотеза + диспозиция + санкция.</div><div class="day-key">Иерархия: Конституция → ФКЗ → ФЗ → Указы → Постановления → региональные акты</div></div></div>
+      <div class="day-row"><span class="day-num">Термины:</span><div class="day-content">Норма права, правоотношение, субъект права, источник права, отрасль права</div></div>
+      <div class="day-row"><span class="day-num">Формула:</span><div class="day-content" style="color:var(--gold-dim);font-style:italic">«Если… То… Иначе…» = Гипотеза + Диспозиция + Санкция</div></div>
+    </div>
+
+    <div class="week-block">
+      <div class="week-title">📜 День 2 — Конституция РФ</div>
+      <div class="day-row"><span class="day-num">Главное:</span><div><div class="day-content">9 глав, 137 статей, принята 12.12.1993. Высшая юридическая сила + прямое действие.</div><div class="day-key">Ст. 2 — человек = высшая ценность. Ст. 49 — презумпция невиновности. Ст. 51 — иммунитет свидетеля.</div></div></div>
+      <div class="day-row"><span class="day-num">Ветви:</span><div class="day-content">Законодательная (Федеральное собрание) + Исполнительная (Правительство) + Судебная</div></div>
+      <div class="day-row"><span class="day-num">Права:</span><div class="day-content">Личные, политические, экономические, социальные, культурные (Глава 2)</div></div>
+    </div>
+
+    <div class="week-block">
+      <div class="week-title">👥 День 3 — Правоотношения и субъекты</div>
+      <div class="day-row"><span class="day-num">Главное:</span><div><div class="day-content">4 элемента правоотношения: субъекты, объект, содержание (права+обязанности), юридический факт.</div><div class="day-key">Дееспособность: до 6 — нет, 6–14 — малолетние, 14–18 — частичная, с 18 — полная</div></div></div>
+      <div class="day-row"><span class="day-num">Субъекты:</span><div class="day-content">Физические лица + юридические лица + государство и публичные образования</div></div>
+      <div class="day-row"><span class="day-num">Факты:</span><div class="day-content">События (не зависят от воли) и действия (правомерные и неправомерные)</div></div>
+    </div>
+
+    <div class="week-block">
+      <div class="week-title">🤝 День 4 — Гражданское право</div>
+      <div class="day-row"><span class="day-num">Главное:</span><div><div class="day-content">ГК РФ (4 части). Право собственности = владение + пользование + распоряжение.</div><div class="day-key">Сделка: устная, письменная, нотариальная, регистрация. Ничтожная vs оспоримая.</div></div></div>
+      <div class="day-row"><span class="day-num">Убытки:</span><div class="day-content">Реальный ущерб + упущенная выгода = полное возмещение (ст. 15 ГК)</div></div>
+      <div class="day-row"><span class="day-num">Реституция:</span><div class="day-content">Возврат сторон в первоначальное положение при недействительности сделки</div></div>
+    </div>
+
+    <div class="week-block">
+      <div class="week-title">🔒 День 5 — Уголовное право</div>
+      <div class="day-row"><span class="day-num">Главное:</span><div><div class="day-content">УК РФ 1996 г. Состав преступления: ООСС (объект, объективная сторона, субъект, субъективная сторона).</div><div class="day-key">Категории: небольшой тяжести (до 3 лет) → средней → тяжкие (до 10) → особо тяжкие (10+)</div></div></div>
+      <div class="day-row"><span class="day-num">Вина:</span><div class="day-content">Умысел (прямой/косвенный) и неосторожность (легкомыслие/небрежность)</div></div>
+      <div class="day-row"><span class="day-num">Защита:</span><div class="day-content">Необходимая оборона, крайняя необходимость, задержание, исполнение приказа (ст. 37–42 УК)</div></div>
+    </div>
+
+    <div class="week-block">
+      <div class="week-title">🏛️ День 6 — Административное право</div>
+      <div class="day-row"><span class="day-num">Главное:</span><div><div class="day-content">КоАП РФ 2001 г. АПН = менее опасное деяние, чем преступление. Срок давности — 2 месяца.</div><div class="day-key">Обжалование постановления — 10 дней. Штраф — 60 дней на оплату.</div></div></div>
+      <div class="day-row"><span class="day-num">Наказания:</span><div class="day-content">Предупреждение → штраф → конфискация → лишение права → арест (до 30 суток)</div></div>
+      <div class="day-row"><span class="day-num">КАС РФ:</span><div class="day-content">При обжаловании действий госоргана — бремя доказывания на органе власти</div></div>
+    </div>
+  </div>
+
+  <!-- MEGAQUIZ -->
+  <div class="section mega-quiz" id="megaquiz">
+    <div class="section-label">Мегатест — 15 вопросов по всей неделе</div>
+
+    <div class="quiz-card"><div class="quiz-meta">День 1 — Теория права</div><div class="quiz-q">1. Назовите три элемента нормы права и объясните каждый.</div><input class="qi" placeholder="Ваш ответ…"><button class="sb" onclick="toggleAnswer(this)">Показать ответ</button><div class="ab">✓ <strong>Гипотеза</strong> — условие применения нормы («если…»). <strong>Диспозиция</strong> — само правило поведения («то…»). <strong>Санкция</strong> — последствия нарушения («иначе…»).</div></div>
+
+    <div class="quiz-card"><div class="quiz-meta">День 1 — Теория права</div><div class="quiz-q">2. Чем публичное право отличается от частного? По какому критерию?</div><input class="qi" placeholder="Ваш ответ…"><button class="sb" onclick="toggleAnswer(this)">Показать ответ</button><div class="ab">✓ По <strong>субъектному составу и методу</strong>. Публичное — государство обязательный субъект, метод императивный. Частное — равноправные субъекты, метод диспозитивный.</div></div>
+
+    <div class="quiz-card"><div class="quiz-meta">День 2 — Конституция</div><div class="quiz-q">3. Что означает «прямое действие Конституции» (ст. 15)?</div><input class="qi" placeholder="Ваш ответ…"><button class="sb" onclick="toggleAnswer(this)">Показать ответ</button><div class="ab">✓ Конституция применяется <strong>непосредственно</strong>, без принятия дополнительных законов. Гражданин вправе ссылаться на неё в суде напрямую.</div></div>
+
+    <div class="quiz-card"><div class="quiz-meta">День 2 — Конституция</div><div class="quiz-q">4. Что закреплено в статье 51 Конституции РФ?</div><input class="qi" placeholder="Ваш ответ…"><button class="sb" onclick="toggleAnswer(this)">Показать ответ</button><div class="ab">✓ Право <strong>не свидетельствовать против себя, своего супруга и близких родственников</strong> — иммунитет свидетеля.</div></div>
+
+    <div class="quiz-card"><div class="quiz-meta">День 3 — Правоотношения</div><div class="quiz-q">5. Перечислите 4 элемента структуры правоотношения.</div><input class="qi" placeholder="Ваш ответ…"><button class="sb" onclick="toggleAnswer(this)">Показать ответ</button><div class="ab">✓ <strong>Субъекты</strong> (участники), <strong>объект</strong> (то, по поводу чего), <strong>содержание</strong> (права и обязанности), <strong>юридический факт</strong> (основание возникновения).</div></div>
+
+    <div class="quiz-card"><div class="quiz-meta">День 3 — Правоотношения</div><div class="quiz-q">6. С какого возраста наступает полная дееспособность? Есть ли исключения?</div><input class="qi" placeholder="Ваш ответ…"><button class="sb" onclick="toggleAnswer(this)">Показать ответ</button><div class="ab">✓ С <strong>18 лет</strong>. Исключения: вступление в брак (снижается до 16 лет) или <strong>эмансипация</strong> — признание дееспособным с 16 лет по решению суда/органа опеки при наличии трудового договора или предпринимательства.</div></div>
+
+    <div class="quiz-card"><div class="quiz-meta">День 4 — Гражданское право</div><div class="quiz-q">7. Что включает в себя понятие «убытки» по ГК РФ?</div><input class="qi" placeholder="Ваш ответ…"><button class="sb" onclick="toggleAnswer(this)">Показать ответ</button><div class="ab">✓ <strong>Реальный ущерб</strong> (фактические потери и расходы на восстановление нарушенного права) + <strong>упущенная выгода</strong> (неполученные доходы, которые были бы получены при нормальных условиях). Ст. 15 ГК РФ.</div></div>
+
+    <div class="quiz-card"><div class="quiz-meta">День 4 — Гражданское право</div><div class="quiz-q">8. Чем ничтожная сделка отличается от оспоримой? Пример каждой.</div><input class="qi" placeholder="Ваш ответ…"><button class="sb" onclick="toggleAnswer(this)">Показать ответ</button><div class="ab">✓ <strong>Ничтожная</strong> — недействительна автоматически (пример: сделка недееспособного). <strong>Оспоримая</strong> — требует решения суда (пример: сделка под влиянием обмана). Последствие обеих — реституция.</div></div>
+
+    <div class="quiz-card"><div class="quiz-meta">День 5 — Уголовное право</div><div class="quiz-q">9. Назовите 4 элемента состава преступления (аббревиатура ООСС).</div><input class="qi" placeholder="Ваш ответ…"><button class="sb" onclick="toggleAnswer(this)">Показать ответ</button><div class="ab">✓ <strong>О</strong>бъект (что охраняется) → <strong>О</strong>бъективная сторона (деяние, последствие, причинная связь) → <strong>С</strong>убъект (вменяемое физическое лицо нужного возраста) → <strong>С</strong>убъективная сторона (умысел или неосторожность).</div></div>
+
+    <div class="quiz-card"><div class="quiz-meta">День 5 — Уголовное право</div><div class="quiz-q">10. С какого возраста наступает уголовная ответственность за кражу (ст. 158 УК)?</div><input class="qi" placeholder="Ваш ответ…"><button class="sb" onclick="toggleAnswer(this)">Показать ответ</button><div class="ab">✓ За кражу — с <strong>14 лет</strong> (ст. 20 ч. 2 УК РФ). Кража входит в перечень преступлений с пониженным возрастом ответственности. Общий возраст — 16 лет.</div></div>
+
+    <div class="quiz-card"><div class="quiz-meta">День 5 — Уголовное право</div><div class="quiz-q">11. Что такое необходимая оборона? Когда она становится превышением?</div><input class="qi" placeholder="Ваш ответ…"><button class="sb" onclick="toggleAnswer(this)">Показать ответ</button><div class="ab">✓ НО — причинение вреда нападающему при защите от общественно опасного посягательства. <strong>Превышение</strong> — явное несоответствие защиты характеру и опасности посягательства (например, убийство при лёгком ударе рукой). Превышение = ответственность по ст. 108 УК.</div></div>
+
+    <div class="quiz-card"><div class="quiz-meta">День 6 — Административное право</div><div class="quiz-q">12. В чём ключевое отличие АПН от преступления?</div><input class="qi" placeholder="Ваш ответ…"><button class="sb" onclick="toggleAnswer(this)">Показать ответ</button><div class="ab">✓ <strong>Меньшая общественная опасность</strong>, предусмотрено КоАП (а не УК), санкции мягче. Пример: хищение до 5000 руб. — КоАП, свыше — УК.</div></div>
+
+    <div class="quiz-card"><div class="quiz-meta">День 6 — Административное право</div><div class="quiz-q">13. В течение какого срока нужно оплатить административный штраф?</div><input class="qi" placeholder="Ваш ответ…"><button class="sb" onclick="toggleAnswer(this)">Показать ответ</button><div class="ab">✓ <strong>60 дней</strong> с момента вступления постановления в законную силу (ст. 32.2 КоАП). При неоплате — новое дело по ст. 20.25: удвоение штрафа или арест до 15 суток.</div></div>
+
+    <div class="quiz-card"><div class="quiz-meta">Комплексный вопрос</div><div class="quiz-q">14. Что такое юридический факт? Приведите 3 примера событий и 3 примера действий.</div><input class="qi" placeholder="Ваш ответ…"><button class="sb" onclick="toggleAnswer(this)">Показать ответ</button><div class="ab">✓ Юридический факт — обстоятельство, порождающее правоотношение. <strong>События:</strong> рождение, смерть, достижение 18 лет. <strong>Действия правомерные:</strong> заключение договора, вынесение судебного решения, регистрация брака. <strong>Неправомерные:</strong> кража, ДТП, административное нарушение.</div></div>
+
+    <div class="quiz-card"><div class="quiz-meta">Комплексный вопрос</div><div class="quiz-q">15. Назовите иерархию нормативно-правовых актов РФ от высшего к низшему (8 уровней).</div><input class="qi" placeholder="Ваш ответ…"><button class="sb" onclick="toggleAnswer(this)">Показать ответ</button><div class="ab">✓ 1. Конституция РФ → 2. ФКЗ → 3. ФЗ → 4. Указы Президента → 5. Постановления Правительства → 6. Акты федеральных органов → 7. Законы субъектов РФ → 8. Акты местного самоуправления.</div></div>
+  </div>
+
+  <!-- CASES -->
+  <div class="section" id="cases">
+    <div class="section-label">Практические кейсы — разбор ситуаций</div>
+
+    <div class="card" style="border-left-color:#C9A84C;margin-bottom:8px">
+      <h3>Как работать с кейсом</h3>
+      <p>Для каждого кейса: 1) определи отрасль права, 2) найди применимые нормы закона, 3) ответь на вопросы, 4) сформулируй правовую позицию. Это и есть работа юриста.</p>
+    </div>
+
+    <div class="case-card">
+      <div class="case-title">⚖️ Кейс 1 — Гражданское право</div>
+      <div class="case-text">Иван купил у Петра автомобиль за 500 000 рублей. Договор был заключён устно — просто передали деньги и ключи. Через неделю выяснилось, что машина числится в залоге у банка. Банк потребовал вернуть автомобиль.</div>
+      <div class="case-questions"><ol>
+        <li>Какова юридическая судьба сделки купли-продажи?</li>
+        <li>Нужна ли письменная форма для такого договора?</li>
+        <li>Какие права есть у Ивана — покупателя?</li>
+        <li>К кому и с каким иском может обратиться Иван?</li>
+      </ol></div>
+    </div>
+
+    <div class="case-card">
+      <div class="case-title">🔒 Кейс 2 — Уголовное право</div>
+      <div class="case-text">Студент 15 лет вместе с другом 17 лет ночью разбили витрину магазина и похитили товары на 60 000 рублей. При задержании студент заявил, что «просто стоял рядом и не участвовал».</div>
+      <div class="case-questions"><ol>
+        <li>Какое преступление совершено? Назови статью УК.</li>
+        <li>Оба ли понесут уголовную ответственность?</li>
+        <li>Как квалифицировать соучастие? Кто организатор, кто исполнитель?</li>
+        <li>Влияет ли возраст на меру ответственности?</li>
+      </ol></div>
+    </div>
+
+    <div class="case-card">
+      <div class="case-title">🏛️ Кейс 3 — Административное право</div>
+      <div class="case-text">Сотрудник полиции остановил водителя и составил протокол о превышении скорости на 25 км/ч. Водитель считает, что радар был неисправен, и хочет оспорить штраф в 500 рублей. Прошло 8 дней с момента получения постановления.</div>
+      <div class="case-questions"><ol>
+        <li>В какой срок нужно подать жалобу? Успел ли водитель?</li>
+        <li>Куда подавать жалобу и в каком порядке?</li>
+        <li>Что нужно доказать водителю?</li>
+        <li>Что произойдёт, если штраф не оплатить и не обжаловать?</li>
+      </ol></div>
+    </div>
+
+    <div class="case-card">
+      <div class="case-title">📜 Кейс 4 — Конституционное право</div>
+      <div class="case-text">При обыске в квартире Смирнова сотрудники полиции изъяли ноутбук и личную переписку. Смирнов утверждает, что обыск нарушил его конституционные права, так как ордера на обыск не было — показали просто «служебное удостоверение».</div>
+      <div class="case-questions"><ol>
+        <li>Какие конституционные права Смирнова нарушены? Назови статьи.</li>
+        <li>Каков законный порядок проведения обыска в жилище?</li>
+        <li>Каковы последствия незаконного обыска для уголовного дела?</li>
+        <li>Куда Смирнов может обратиться за защитой прав?</li>
+      </ol></div>
+    </div>
+  </div>
+
+  <!-- CHECKLIST -->
+  <div class="section" id="checklist">
+    <div class="section-label">Чеклист — что ты знаешь после недели 1</div>
+
+    <div class="card">
+      <h3>Отметь всё, что ты уверенно знаешь</h3>
+      <p style="margin-bottom:14px">Нажми на пункт, чтобы отметить. Это твоя самооценка — будь честен с собой.</p>
+      <div class="checklist" id="checklistItems">
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text">Знаю 3 элемента нормы права: гипотеза, диспозиция, санкция</div></div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text">Знаю иерархию НПА — 8 уровней от Конституции до местных актов</div></div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text">Знаю ключевые статьи Конституции: 1, 2, 15, 21, 48, 49, 51</div></div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text">Знаю принцип презумпции невиновности и иммунитет свидетеля</div></div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text">Понимаю 4 элемента правоотношения (СОЮЯ)</div></div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text">Знаю дееспособность по возрастам: 6/14/16/18 лет</div></div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text">Понимаю триаду права собственности: владение+пользование+распоряжение</div></div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text">Знаю разницу между ничтожной и оспоримой сделкой</div></div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text">Знаю состав преступления — ООСС</div></div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text">Знаю 4 категории преступлений по тяжести с максимальными сроками</div></div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text">Понимаю разницу между умыслом и неосторожностью</div></div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text">Знаю возраст уголовной ответственности: 16 лет (и 14 — для отдельных преступлений)</div></div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text">Понимаю чем АПН отличается от преступления</div></div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text">Знаю срок давности по КоАП — 2 месяца</div></div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><div class="check-text">Знаю срок обжалования постановления по АПН — 10 дней</div></div>
+      </div>
+      <div id="checkScore" style="margin-top:14px;font-size:15px;color:var(--gold-dim);text-align:center;padding:12px;background:#C9A84C0a;border:1px solid #C9A84C22;border-radius:8px">
+        Отмечено: <span id="scoreNum">0</span> / 15
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:4px">
+      <h3>📅 Что ждёт тебя на Неделе 2</h3>
+      <ul>
+        <li>День 8 — Уголовный процесс (УПК РФ) — стадии расследования</li>
+        <li>День 9 — Гражданский процесс (ГПК РФ) — как подать иск в суд</li>
+        <li>День 10 — Следователь: полномочия, методы, права подозреваемого</li>
+        <li>День 11 — Прокурор: прокурорский надзор и обвинение в суде</li>
+        <li>День 12 — Доказательства в уголовном процессе</li>
+        <li>День 13 — Судебная система РФ: структура и компетенция судов</li>
+        <li>День 14 — Практикум: разбор реального уголовного дела</li>
+      </ul>
+    </div>
+
+    <div class="complete-wrap"><button class="complete-btn" id="completeBtn" onclick="toggleComplete()">🏆 Неделя 1 пройдена!</button></div>
+  </div>
+
+</div>
+<script>
+  function showTab(id,btn){document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));document.getElementById(id).classList.add('active');btn.classList.add('active');window.scrollTo({top:0,behavior:'smooth'})}
+  function toggleAnswer(btn){const box=btn.nextElementSibling;const v=box.classList.contains('visible');box.classList.toggle('visible',!v);btn.textContent=v?'Показать ответ':'Скрыть ответ'}
+  function toggleCheck(item){item.classList.toggle('checked');const box=item.querySelector('.check-box');box.textContent=item.classList.contains('checked')?'✓':'';const total=document.querySelectorAll('.check-item.checked').length;document.getElementById('scoreNum').textContent=total}
+  let done=false;function toggleComplete(){done=!done;const btn=document.getElementById('completeBtn');btn.classList.toggle('done',done);btn.textContent=done?'🎓 Неделя 1 завершена!':'🏆 Неделя 1 пройдена!'}
+</script>
+</body>
+</html>
